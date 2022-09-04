@@ -1,8 +1,10 @@
 export async function fetchPlainText(url: string) {
-  const response = await fetch(url)
-  if (!response.ok) {
-    console.log(`An error has occurred: ${response.status}`)
+  try {
+    const response = await fetch(url)
+    if (!response.ok) return
+    const data = await response.text()
+    return data
+  } catch (error) {
+    console.error(`Error Occurred Reason: ${error}`)
   }
-  const data = await response.text()
-  return data
 }

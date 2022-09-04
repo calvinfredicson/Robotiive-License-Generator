@@ -1,9 +1,9 @@
-const enum LicenseType {
+export const enum LicenseType {
   SINGLE = 0,
   VOLUME = 1,
 }
 
-const enum ComponentType {
+export const enum ComponentType {
   RCM = 0,
   SIDEEX = 1,
   PLC = 2,
@@ -11,4 +11,9 @@ const enum ComponentType {
   LOGVIEWER = 4,
   RUNNER_SCHEDULER = 5,
   OPEN_API = 6,
+}
+
+export const enum User {
+  PARTNER = 0,
+  CUSTOMER = 1,
 }

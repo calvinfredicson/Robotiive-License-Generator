@@ -1,3 +1,5 @@
+import { ComponentType, LicenseType, User } from "../types/enums"
+
 export const LicenseTypeMap: Record<LicenseType, string> = {
   [LicenseType.SINGLE]: "Single",
   [LicenseType.VOLUME]: "Volume",
@@ -11,4 +13,15 @@ export const ComponentTypeMap: Record<ComponentType, string> = {
   [ComponentType.LOGVIEWER]: "Log Viewer",
   [ComponentType.RUNNER_SCHEDULER]: "Runner Scheduler",
   [ComponentType.OPEN_API]: "Open API",
+}
+
+export const UserTypeMap: Record<User, { type: string; expiry: number }> = {
+  [User.PARTNER]: {
+    type: "Partner",
+    expiry: 3,
+  },
+  [User.CUSTOMER]: {
+    type: "Customer",
+    expiry: 1,
+  },
 }
