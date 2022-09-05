@@ -1,4 +1,6 @@
 import {
+  Autocomplete,
+  AutocompleteProps,
   Avatar,
   Box,
   Button,
@@ -6,8 +8,6 @@ import {
   Container,
   createTheme,
   CssBaseline,
-  FormControlLabel,
-  Grid,
   Link,
   MenuItem,
   TextField,
@@ -15,11 +15,20 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material"
-import { VpnKeyOutlined } from "@material-ui/icons"
+import {
+  CheckBox,
+  CheckBoxOutlineBlankOutlined,
+  VpnKeyOutlined,
+} from "@material-ui/icons"
 import { FormEvent, useCallback, useMemo, useState } from "react"
 import type { NextPage } from "next"
-import { UserTypeMap } from "../stringTemplates"
-import { User } from "../types/enums"
+import {
+  ComponentTypeMap,
+  LicenseTypeMap,
+  UserTypeMap,
+} from "../stringTemplates"
+import { ComponentType, LicenseType, User } from "../types"
+import dateFormat from "dateformat"
 
 function Copyright(props: any) {
   return (
@@ -44,6 +53,8 @@ const GenerateLicense: NextPage = () => {
   const [licenseExpiry, setLicenseExpiry] = useState(
     UserTypeMap[User.CUSTOMER].expiry
   )
+  const [componentType, setComponentType] = useState<string[]>([])
+  const [licenseType, setLicenseType] = useState(LicenseType.SINGLE)
 
   const onUIDChange = useCallback<NonNullable<TextFieldProps["onChange"]>>(
     (event) => {
@@ -58,9 +69,31 @@ const GenerateLicense: NextPage = () => {
     setLicenseExpiry(+event.target.value)
   }, [])
 
+  const onComponentTypeChange = useCallback<
+    NonNullable<AutocompleteProps<string, true, true, any>["onChange"]>
+  >((_, value, reason) => {
+    if (reason !== "selectOption" && reason !== "removeOption") return
+    setComponentType(value)
+  }, [])
+
+  const onLicenseTypeChange = useCallback<
+    NonNullable<TextFieldProps["onChange"]>
+  >((event) => {
+    setLicenseType(+event.target.value)
+  }, [])
+
+  const licenseExpiryDate = useMemo(() => {
+    return dateFormat(
+      new Date(
+        new Date().setFullYear(new Date().getFullYear() + licenseExpiry)
+      ),
+      "yyyy-mm-dd"
+    )
+  }, [licenseExpiry])
+
   const licenseBuilderString = useMemo(() => {
-    return `https://ops.iscooldev.com/genlicense/${uid}/2022-04-04/0/-1`
-  }, [uid])
+    return `https://ops.iscooldev.com/genlicense/${uid}/${licenseExpiryDate}/${licenseType}/${componentType.toString()}`
+  }, [componentType, licenseExpiryDate, licenseType, uid])
 
   console.log(licenseBuilderString)
 
@@ -106,6 +139,48 @@ const GenerateLicense: NextPage = () => {
                   key={type}
                   value={expiry}
                 >{`${type} - ${expiry} month(s)`}</MenuItem>
+              ))}
+            </TextField>
+            <Autocomplete
+              value={componentType}
+              onChange={onComponentTypeChange}
+              multiple
+              options={Object.keys(ComponentTypeMap)}
+              disableCloseOnSelect
+              getOptionLabel={(value) => value}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox
+                    icon={<CheckBoxOutlineBlankOutlined />}
+                    checkedIcon={<CheckBox />}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                  />
+                  {ComponentTypeMap[option as unknown as ComponentType]}
+                </li>
+              )}
+              style={{ width: 500 }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Component Type"
+                  placeholder="Component Type"
+                />
+              )}
+            />
+            <TextField
+              margin="normal"
+              required
+              label="License Type"
+              fullWidth
+              select
+              onChange={onLicenseTypeChange}
+              value={licenseType}
+            >
+              {Object.entries(LicenseTypeMap).map(([licenseType, value]) => (
+                <MenuItem key={licenseType} value={licenseType}>
+                  {value}
+                </MenuItem>
               ))}
             </TextField>
             <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>

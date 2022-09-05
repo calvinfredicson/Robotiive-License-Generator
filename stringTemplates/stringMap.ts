@@ -1,4 +1,4 @@
-import { ComponentType, LicenseType, User } from "../types/enums"
+import { ComponentType, LicenseType, User } from "../types"
 
 export const LicenseTypeMap: Record<LicenseType, string> = {
   [LicenseType.SINGLE]: "Single",

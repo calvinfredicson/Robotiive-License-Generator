@@ -4,14 +4,14 @@ import { fetchPlainText } from "../../Utils"
 
 type License = {
   license: string
+  message: string
 }
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<License>
-) {
+export default async function handler(res: NextApiResponse<Partial<License>>) {
   const url =
     "https://ops.iscooldev.com/genlicense/24597616-9bb8-407d-9861-5375ce070716/2022-04-04/0/-1"
   const license = await fetchPlainText(url)
-  res.status(200).json({ license })
+  if (!license)
+    return res.status(500).json({ message: "something went wrong!" })
+  return res.status(200).json({ license })
 }
