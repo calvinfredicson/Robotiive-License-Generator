@@ -4,6 +4,7 @@ export const enum LicenseType {
 }
 
 export const enum ComponentType {
+  ALL = -1,
   RCM = 0,
   SIDEEX = 1,
   PLC = 2,

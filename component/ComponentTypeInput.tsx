@@ -10,7 +10,6 @@ import {
   TextField,
 } from "@mui/material"
 import { ComponentTypeMap } from "../stringTemplates"
-import { ComponentType } from "../types"
 
 interface ComponentTypeProps
   extends Partial<AutocompleteProps<string, true, true, any>> {
@@ -26,7 +25,7 @@ export const ComponentTypeInput: React.FC<ComponentTypeProps> = ({
       {...props}
       multiple
       clearIcon={<Clear fontSize="small" onClick={clearInput} />}
-      options={Object.keys(ComponentTypeMap)}
+      options={Object.values(ComponentTypeMap)}
       disableCloseOnSelect
       getOptionLabel={(value) => value}
       renderOption={(props, option, { selected }) => (
@@ -37,7 +36,7 @@ export const ComponentTypeInput: React.FC<ComponentTypeProps> = ({
             style={{ marginRight: 8 }}
             checked={selected}
           />
-          {ComponentTypeMap[option as unknown as ComponentType]}
+          {option}
         </li>
       )}
       style={{ width: 500 }}

@@ -1,1 +1,2 @@
-export * from "./ComponentTypeInput"
+export * from "./componentTypeInput"
+export * from "./licenseGenerator"

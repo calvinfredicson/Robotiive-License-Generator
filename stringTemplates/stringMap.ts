@@ -6,6 +6,7 @@ export const LicenseTypeMap: Record<LicenseType, string> = {
 }
 
 export const ComponentTypeMap: Record<ComponentType, string> = {
+  [ComponentType.ALL]: "All",
   [ComponentType.RCM]: "RCM",
   [ComponentType.SIDEEX]: "Sideex",
   [ComponentType.PLC]: "PLC",
