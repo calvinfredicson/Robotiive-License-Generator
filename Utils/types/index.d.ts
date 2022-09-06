@@ -1,12 +1,9 @@
-declare namespace FetchData {
-  export interface FetchError extends Error {
-    status: number
-    statusText: string
-  }
+import { RequestError } from "../types"
 
+declare namespace FetchData {
   export interface FetchResult<T> {
     data?: T
-    error?: FetchError
+    error?: RequestError
   }
 }
 

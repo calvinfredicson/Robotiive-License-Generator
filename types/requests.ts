@@ -5,10 +5,10 @@ export interface LicenseRequestParameters {
   componentType: string
 }
 
-export interface LicenseRequestError {
+export interface RequestError {
   message: string
 }
 
-export interface LicenseStringType {
+export interface License {
   license: string
 }

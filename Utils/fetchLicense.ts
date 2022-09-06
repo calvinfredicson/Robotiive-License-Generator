@@ -1,14 +1,17 @@
-import FetchData from "./types"
+import { RequestError } from "../types"
 
-export async function fetchLicense<T>(
-  url: string
-): Promise<FetchData.FetchResult<T>> {
+interface LicenseReturnType {
+  data?: string
+  error?: RequestError
+}
+
+export async function fetchLicense(url: string): Promise<LicenseReturnType> {
   const response = await fetch(url)
   if (!response.ok) {
-    throw new Error("Something went wrong")
+    return { error: { message: "something went wrong" } }
   }
   const licenseString = await response.text()
   return {
-    data: licenseString as T,
+    data: licenseString,
   }
 }

@@ -17,12 +17,7 @@ import { VpnKeyOutlined } from "@material-ui/icons"
 import { useCallback, useMemo, useState } from "react"
 import type { NextPage } from "next"
 import { LicenseTypeMap, UserTypeMap } from "../stringTemplates"
-import {
-  LicenseType,
-  LicenseRequestParameters,
-  User,
-  LicenseStringType,
-} from "../types"
+import { LicenseType, LicenseRequestParameters, User, License } from "../types"
 import dateFormat from "dateformat"
 import { fetchJson } from "../Utils"
 import { ComponentTypeInput } from "../component"
@@ -93,18 +88,23 @@ const GenerateLicense: NextPage = () => {
   }, [licenseExpiry])
 
   const doGenerateLicense = useCallback(async () => {
+    if (!componentType.length) {
+      window.alert("Please fill all field!")
+      return
+    }
     const url = "http://localhost:3000/api/generateLicense"
-    const response = await fetchJson<
-      LicenseRequestParameters,
-      LicenseStringType
-    >(url, "POST", {
-      uid: uid,
-      licenseExpiryDate: licenseExpiryDate,
-      licenseType: licenseType,
-      componentType: componentType.toString(),
-    })
-    if (!response) return
-    window.alert(response.license)
+    const response = await fetchJson<LicenseRequestParameters, License>(
+      url,
+      "POST",
+      {
+        uid: uid,
+        licenseExpiryDate: licenseExpiryDate,
+        licenseType: licenseType,
+        componentType: componentType.toString(),
+      }
+    )
+    if (!response.data) return
+    window.alert(response.data.license)
   }, [componentType, licenseExpiryDate, licenseType, uid])
 
   return (
