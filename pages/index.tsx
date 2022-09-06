@@ -1,10 +1,8 @@
 import {
-  Autocomplete,
   AutocompleteProps,
   Avatar,
   Box,
   Button,
-  Checkbox,
   Container,
   createTheme,
   CssBaseline,
@@ -15,20 +13,11 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material"
-import {
-  CheckBox,
-  CheckBoxOutlineBlankOutlined,
-  VpnKeyOutlined,
-} from "@material-ui/icons"
+import { VpnKeyOutlined } from "@material-ui/icons"
 import { useCallback, useMemo, useState } from "react"
 import type { NextPage } from "next"
+import { LicenseTypeMap, UserTypeMap } from "../stringTemplates"
 import {
-  ComponentTypeMap,
-  LicenseTypeMap,
-  UserTypeMap,
-} from "../stringTemplates"
-import {
-  ComponentType,
   LicenseType,
   LicenseRequestParameters,
   User,
@@ -36,6 +25,7 @@ import {
 } from "../types"
 import dateFormat from "dateformat"
 import { fetchJson } from "../Utils"
+import { ComponentTypeInput } from "../component"
 
 function Copyright(props: any) {
   return (
@@ -81,6 +71,10 @@ const GenerateLicense: NextPage = () => {
   >((_, value, reason) => {
     if (reason !== "selectOption" && reason !== "removeOption") return
     setComponentType(value)
+  }, [])
+
+  const clearSelectedComponentType = useCallback(() => {
+    setComponentType([])
   }, [])
 
   const onLicenseTypeChange = useCallback<
@@ -157,32 +151,10 @@ const GenerateLicense: NextPage = () => {
                 >{`${type} - ${expiry} month(s)`}</MenuItem>
               ))}
             </TextField>
-            <Autocomplete
+            <ComponentTypeInput
               value={componentType}
               onChange={onComponentTypeChange}
-              multiple
-              options={Object.keys(ComponentTypeMap)}
-              disableCloseOnSelect
-              getOptionLabel={(value) => value}
-              renderOption={(props, option, { selected }) => (
-                <li {...props}>
-                  <Checkbox
-                    icon={<CheckBoxOutlineBlankOutlined />}
-                    checkedIcon={<CheckBox />}
-                    style={{ marginRight: 8 }}
-                    checked={selected}
-                  />
-                  {ComponentTypeMap[option as unknown as ComponentType]}
-                </li>
-              )}
-              style={{ width: 500 }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Component Type"
-                  placeholder="Component Type"
-                />
-              )}
+              clearInput={clearSelectedComponentType}
             />
             <TextField
               margin="normal"
