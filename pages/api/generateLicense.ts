@@ -1,17 +1,19 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next"
+import type { LicenseRequestParameters } from "../../types"
 import { fetchPlainText } from "../../Utils"
+import type { LicenseStringType } from "../../types"
 
-type License = {
-  license: string
-  message: string
-}
-
-export default async function handler(res: NextApiResponse<Partial<License>>) {
-  const url =
-    "https://ops.iscooldev.com/genlicense/24597616-9bb8-407d-9861-5375ce070716/2022-04-04/0/-1"
-  const license = await fetchPlainText(url)
-  if (!license)
-    return res.status(500).json({ message: "something went wrong!" })
-  return res.status(200).json({ license })
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<LicenseStringType>
+) {
+  if (req.method !== "POST") return
+  const { uid, licenseExpiryDate, componentType, licenseType } = JSON.parse(
+    req.body
+  ) as LicenseRequestParameters
+  const url = `https://ops.iscooldev.com/genlicense/${uid}/${licenseExpiryDate}/${licenseType}/${componentType}`
+  const licenseString = await fetchPlainText(url)
+  if (!licenseString) return res.status(500)
+  return res.status(200).json({ license: licenseString })
 }
