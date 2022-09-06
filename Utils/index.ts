@@ -1,2 +1,2 @@
-export * from "./fetchPlainText"
+export * from "./fetchLicense"
 export * from "./fetchJson"
