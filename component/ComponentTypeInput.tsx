@@ -39,7 +39,6 @@ export const ComponentTypeInput: React.FC<ComponentTypeProps> = ({
           {option}
         </li>
       )}
-      style={{ width: 500 }}
       renderInput={(params) => (
         <TextField
           {...params}

@@ -2,9 +2,8 @@ import { createTheme, ThemeProvider } from "@mui/material"
 import { LicenseGenerator } from "../component"
 import { NextPage } from "next"
 
-const theme = createTheme()
-
 const GenerateLicense: NextPage = () => {
+  const theme = createTheme()
   return (
     <ThemeProvider theme={theme}>
       <LicenseGenerator />

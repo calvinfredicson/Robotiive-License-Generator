@@ -128,26 +128,21 @@ export const LicenseGenerator = () => {
   return (
     <Container
       component="main"
-      maxWidth="sm"
+      maxWidth="xs"
       sx={{
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        padding={6}
-      >
+      <Box display="flex" flexDirection="column" alignItems="center">
         <Avatar sx={{ padding: 1, margin: 2, bgcolor: "secondary.main" }}>
           <VpnKeyOutlined fontSize="large" />
         </Avatar>
-        <Typography variant="h4" sx={{ mt: 1, mb: 3 }}>
+        <Typography variant="h4" textAlign="center" sx={{ mt: 1, mb: 3 }}>
           Generate Robotiive License
         </Typography>
-        <Box display="flex" flexDirection="column" gap={3}>
+        <Box display="flex" flexDirection="column" gap={3} width="100%">
           <TextField
             required
             fullWidth
