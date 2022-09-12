@@ -1,2 +1,2 @@
-export * from "./componentTypeInput"
-export * from "./licenseGenerator"
+export * from "./componentTypeTextField"
+export * from "./generateLicense"
