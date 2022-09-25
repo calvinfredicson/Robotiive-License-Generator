@@ -22,20 +22,24 @@ export const GeneratorWrapper: React.FC<GeneratorWrapperProps> = ({
         justifyContent: "center",
       }}
     >
-      <Box
-        component="form"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        onSubmit={handleSubmit}
-      >
-        <Avatar sx={{ padding: 1, margin: 2, bgcolor: "secondary.main" }}>
-          <VpnKeyOutlined fontSize="large" />
-        </Avatar>
-        <Typography variant="h4" textAlign="center" sx={{ mt: 1, mb: 3 }}>
-          {title}
-        </Typography>
-        {children}
+      <Box component="form" width="100%" onSubmit={handleSubmit}>
+        <Box display="flex" flexDirection="column" gap={3} width="100%">
+          <Box
+            display="flex"
+            flexDirection="column"
+            gap={1}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Avatar sx={{ padding: 1, margin: 1, bgcolor: "secondary.main" }}>
+              <VpnKeyOutlined fontSize="large" />
+            </Avatar>
+            <Typography variant="h4" textAlign="center">
+              {title}
+            </Typography>
+          </Box>
+          {children}
+        </Box>
       </Box>
     </Container>
   )

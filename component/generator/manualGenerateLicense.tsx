@@ -1,13 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  MenuItem,
-  TextField,
-  Typography,
-} from "@mui/material"
-import { VpnKeyOutlined } from "@material-ui/icons"
+import { Box, Button, MenuItem, TextField } from "@mui/material"
 import { useCallback } from "react"
 import { LicenseTypeMap, UserTypeMap } from "../../stringTemplates"
 import {
@@ -15,7 +6,7 @@ import {
   License,
   User,
   LicenseType,
-  LicenseGeneratorInfo,
+  ManualLicenseGeneratorInfo,
 } from "../../types"
 import {
   convertComponentType,
@@ -27,7 +18,7 @@ import { InputLicenseExpiry, InputUID, InputComponentType } from "../inputs"
 import { GeneratorWrapper } from "./generatorWrapper"
 
 export const ManualLicenseGenerator = () => {
-  const { control, handleSubmit, reset } = useForm<LicenseGeneratorInfo>({
+  const { control, handleSubmit, reset } = useForm<ManualLicenseGeneratorInfo>({
     defaultValues: {
       uid: "",
       licenseExpiry: UserTypeMap[User.PARTNER].expiry,
@@ -36,7 +27,9 @@ export const ManualLicenseGenerator = () => {
     },
   })
 
-  const generateLicense = useCallback<SubmitHandler<LicenseGeneratorInfo>>(
+  const generateLicense = useCallback<
+    SubmitHandler<ManualLicenseGeneratorInfo>
+  >(
     async ({ uid, licenseExpiry, licenseType, componentType }) => {
       if (!componentType.length) {
         window.alert("Please choose component Type")
@@ -70,32 +63,30 @@ export const ManualLicenseGenerator = () => {
       title="Manual License Generator"
       handleSubmit={handleSubmit(generateLicense)}
     >
-      <Box display="flex" flexDirection="column" gap={3} width="100%">
-        <InputUID control={control} />
-        <InputLicenseExpiry control={control} />
-        <Controller
-          render={({ field }) => <InputComponentType {...field} />}
-          name="componentType"
-          control={control}
-        />
-        <Controller
-          render={({ field }) => (
-            <TextField {...field} label="License Type" fullWidth select>
-              {Object.entries(LicenseTypeMap).map(([licenseType, value]) => (
-                <MenuItem key={licenseType} value={licenseType}>
-                  {value}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
-          name="licenseType"
-          control={control}
-        />
-        <Box display="flex" flexDirection="column" gap={1}>
-          <Button type="submit" fullWidth variant="contained" size="large">
-            Generate
-          </Button>
-        </Box>
+      <InputUID control={control} />
+      <InputLicenseExpiry control={control} />
+      <Controller
+        render={({ field }) => <InputComponentType {...field} />}
+        name="componentType"
+        control={control}
+      />
+      <Controller
+        render={({ field }) => (
+          <TextField {...field} label="License Type" fullWidth select>
+            {Object.entries(LicenseTypeMap).map(([licenseType, value]) => (
+              <MenuItem key={licenseType} value={licenseType}>
+                {value}
+              </MenuItem>
+            ))}
+          </TextField>
+        )}
+        name="licenseType"
+        control={control}
+      />
+      <Box display="flex" flexDirection="column" gap={1}>
+        <Button type="submit" fullWidth variant="contained" size="large">
+          Generate
+        </Button>
       </Box>
     </GeneratorWrapper>
   )

@@ -1,8 +1,8 @@
-import { LicenseGeneratorInfo } from "./license"
+import { ManualLicenseGeneratorInfo } from "./license"
 
 export interface LicenseRequestParameters
   extends Omit<
-    LicenseGeneratorInfo,
+    ManualLicenseGeneratorInfo,
     "licenseExpiry" | "licenseType" | "componentType"
   > {
   licenseExpiryDate: string

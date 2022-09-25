@@ -1,20 +1,19 @@
 import { createTheme, ThemeProvider } from "@mui/material"
-import { ManualLicenseGenerator } from "../component"
-
+import { LicenseGenerator } from "../component"
 import { GetServerSidePropsContext, NextPage } from "next"
+import { CompanyList } from "../Utils/types"
 
-interface GenerateLicensePageProps {
-  licenseString: string
+export interface GenerateLicensePageProps {
+  companyList: CompanyList[]
 }
 
 const GenerateLicensePage: NextPage<GenerateLicensePageProps> = ({
-  licenseString,
+  companyList,
 }) => {
   const theme = createTheme()
-  console.log(licenseString)
   return (
     <ThemeProvider theme={theme}>
-      <ManualLicenseGenerator />
+      <LicenseGenerator companyList={companyList} />
     </ThemeProvider>
   )
 }
@@ -22,7 +21,40 @@ const GenerateLicensePage: NextPage<GenerateLicensePageProps> = ({
 export async function getServerSideProps(_ctx: GetServerSidePropsContext) {
   return {
     props: {
-      licenseString: "sss",
+      companyList: [
+        {
+          "Company Name": "詮鼎",
+          Type: "Partner",
+        },
+        {
+          "Company Name": "Eastek ",
+          Type: "Partner",
+        },
+        {
+          "Company Name": "Tainet",
+          Type: "Partner",
+        },
+        {
+          "Company Name": "和泰",
+          Type: "Customer/Client",
+        },
+        {
+          "Company Name": "聯合發行",
+          Type: "Customer/Client",
+        },
+        {
+          "Company Name": "simBridge",
+          Type: "Partner",
+        },
+        {
+          "Company Name": "Hitachi",
+          Type: "Partner",
+        },
+        {
+          "Company Name": "承啟科技",
+          Type: "Partner",
+        },
+      ],
     },
   }
 }

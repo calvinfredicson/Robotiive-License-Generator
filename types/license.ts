@@ -1,4 +1,4 @@
-export interface LicenseGeneratorInfo {
+export interface ManualLicenseGeneratorInfo {
   uid: string
   licenseExpiry: number
   licenseType: number

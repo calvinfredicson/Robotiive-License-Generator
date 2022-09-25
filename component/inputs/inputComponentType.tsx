@@ -8,11 +8,11 @@ import {
 } from "@mui/material"
 import { forwardRef, useCallback } from "react"
 import { ControllerRenderProps } from "react-hook-form"
-import { LicenseGeneratorInfo } from "../../types"
+import { ManualLicenseGeneratorInfo } from "../../types"
 import { ComponentTypeMap } from "../../stringTemplates"
 
 type ComponentTypeProps = Partial<AutocompleteProps<string, true, true, any>> &
-  ControllerRenderProps<LicenseGeneratorInfo, "componentType">
+  ControllerRenderProps<ManualLicenseGeneratorInfo, "componentType">
 
 export const InputComponentType = forwardRef<any, ComponentTypeProps>(
   function ComponentTypeInput({ onChange, ...props }, ref) {
@@ -27,6 +27,7 @@ export const InputComponentType = forwardRef<any, ComponentTypeProps>(
     return (
       <Autocomplete
         {...props}
+        fullWidth
         ref={ref}
         multiple
         options={Object.values(ComponentTypeMap)}
