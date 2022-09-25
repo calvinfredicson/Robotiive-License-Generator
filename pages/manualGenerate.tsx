@@ -1,14 +1,14 @@
 import { createTheme, ThemeProvider } from "@mui/material"
-import { LicenseGenerator } from "../component"
+import { ManualLicenseGenerator } from "../component"
 import { NextPage } from "next"
 
-const GenerateLicense: NextPage = () => {
+const ManualGenerate: NextPage = () => {
   const theme = createTheme()
   return (
     <ThemeProvider theme={theme}>
-      <LicenseGenerator />
+      <ManualLicenseGenerator />
     </ThemeProvider>
   )
 }
 
-export default GenerateLicense
+export default ManualGenerate

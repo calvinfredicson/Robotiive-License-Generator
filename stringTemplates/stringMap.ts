@@ -6,7 +6,6 @@ export const LicenseTypeMap: Record<LicenseType, string> = {
 }
 
 export const ComponentTypeMap: Record<ComponentType, string> = {
-  [ComponentType.ALL]: "All",
   [ComponentType.RCM]: "RCM",
   [ComponentType.SIDEEX]: "Sideex",
   [ComponentType.PLC]: "PLC",
@@ -14,6 +13,7 @@ export const ComponentTypeMap: Record<ComponentType, string> = {
   [ComponentType.LOGVIEWER]: "Log Viewer",
   [ComponentType.RUNNER_SCHEDULER]: "Runner Scheduler",
   [ComponentType.OPEN_API]: "Open API",
+  [ComponentType.ALL]: "All",
 }
 
 export const UserTypeMap: Record<User, { type: string; expiry: number }> = {
