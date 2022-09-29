@@ -4,3 +4,8 @@ export interface ManualLicenseGeneratorInfo {
   licenseType: number
   componentType: string[]
 }
+
+export interface CompanyList {
+  "Company Name": string
+  Type: string
+}

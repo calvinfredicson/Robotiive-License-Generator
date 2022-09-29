@@ -1,7 +1,7 @@
 import { createTheme, ThemeProvider } from "@mui/material"
-import { LicenseGenerator } from "../component"
+import { LicenseGenerator } from "component"
 import { GetServerSidePropsContext, NextPage } from "next"
-import { CompanyList } from "../Utils/types"
+import { CompanyList } from "types"
 
 export interface GenerateLicensePageProps {
   companyList: CompanyList[]

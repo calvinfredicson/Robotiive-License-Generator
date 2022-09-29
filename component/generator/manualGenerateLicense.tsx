@@ -1,20 +1,21 @@
 import { Box, Button, MenuItem, TextField } from "@mui/material"
 import { useCallback } from "react"
-import { LicenseTypeMap, UserTypeMap } from "../../stringTemplates"
+
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import { LicenseTypeMap, UserTypeMap } from "stringTemplates"
 import {
-  LicenseRequestParameters,
   License,
-  User,
+  LicenseRequestParameters,
   LicenseType,
   ManualLicenseGeneratorInfo,
-} from "../../types"
+  User,
+} from "types"
+import { convertComponentType, convertLicenseExpiry, fetchJson } from "Utils"
 import {
-  convertComponentType,
-  convertLicenseExpiry,
-  fetchJson,
-} from "../../Utils"
-import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { InputLicenseExpiry, InputUID, InputComponentType } from "../inputs"
+  InputComponentType,
+  InputLicenseExpiry,
+  InputUID,
+} from "component/inputs"
 import { GeneratorWrapper } from "./generatorWrapper"
 
 export const ManualLicenseGenerator = () => {
