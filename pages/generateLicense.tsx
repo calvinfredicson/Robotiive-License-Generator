@@ -1,3 +1,4 @@
+import Head from "next/head"
 import { createTheme, ThemeProvider } from "@mui/material"
 import { LicenseGenerator } from "component"
 import { GetServerSidePropsContext, NextPage } from "next"
@@ -13,6 +14,9 @@ const GenerateLicensePage: NextPage<GenerateLicensePageProps> = ({
   const theme = createTheme()
   return (
     <ThemeProvider theme={theme}>
+      <Head>
+        <title>Generate License</title>
+      </Head>
       <LicenseGenerator companyList={companyList} />
     </ThemeProvider>
   )

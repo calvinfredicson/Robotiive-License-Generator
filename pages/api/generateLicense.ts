@@ -1,8 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next"
-import type { LicenseRequestParameters } from "../../types"
-import { fetchLicense } from "../../Utils"
-import type { License } from "../../types"
+import type { License, LicenseRequestParameters } from "types"
+import { fetchLicense } from "Utils"
 
 export default async function handler(
   req: NextApiRequest,
