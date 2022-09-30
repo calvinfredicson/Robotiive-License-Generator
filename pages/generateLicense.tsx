@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from "@mui/material"
 import { LicenseGenerator } from "component"
 import { GetServerSidePropsContext, NextPage } from "next"
 import { CompanyList } from "types"
+import { getRecordedCompanyList } from "./api/getRecordedCompanyList"
 
 export interface GenerateLicensePageProps {
   companyList: CompanyList[]
@@ -23,42 +24,10 @@ const GenerateLicensePage: NextPage<GenerateLicensePageProps> = ({
 }
 
 export async function getServerSideProps(_ctx: GetServerSidePropsContext) {
+  const companyList = await getRecordedCompanyList()
   return {
     props: {
-      companyList: [
-        {
-          "Company Name": "詮鼎",
-          Type: "Partner",
-        },
-        {
-          "Company Name": "Eastek ",
-          Type: "Partner",
-        },
-        {
-          "Company Name": "Tainet",
-          Type: "Partner",
-        },
-        {
-          "Company Name": "和泰",
-          Type: "Customer/Client",
-        },
-        {
-          "Company Name": "聯合發行",
-          Type: "Customer/Client",
-        },
-        {
-          "Company Name": "simBridge",
-          Type: "Partner",
-        },
-        {
-          "Company Name": "Hitachi",
-          Type: "Partner",
-        },
-        {
-          "Company Name": "承啟科技",
-          Type: "Partner",
-        },
-      ],
+      companyList: companyList,
     },
   }
 }

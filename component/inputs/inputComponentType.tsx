@@ -8,8 +8,8 @@ import {
 } from "@mui/material"
 import { forwardRef, useCallback } from "react"
 import { ControllerRenderProps } from "react-hook-form"
-import { ManualLicenseGeneratorInfo } from "../../types"
-import { ComponentTypeMap } from "../../stringTemplates"
+import { ComponentTypeMap } from "stringTemplates"
+import type { ManualLicenseGeneratorInfo } from "types"
 
 type ComponentTypeProps = Partial<AutocompleteProps<string, true, true, any>> &
   ControllerRenderProps<ManualLicenseGeneratorInfo, "componentType">

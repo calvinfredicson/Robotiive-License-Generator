@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material"
-import type { ReactHookFormController } from "../types"
+import type { ReactHookFormController } from "component/types"
 import { Controller } from "react-hook-form"
 
 interface InputUIDProps extends ReactHookFormController {}
