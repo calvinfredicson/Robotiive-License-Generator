@@ -1,8 +1,6 @@
-import { RequestError } from "../types"
-
 interface ResponseType<T> {
   data?: T
-  error?: RequestError
+  error?: License.API.RequestError
 }
 
 export async function fetchJson<T, K>(

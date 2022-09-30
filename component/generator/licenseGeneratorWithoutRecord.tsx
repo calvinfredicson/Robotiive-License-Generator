@@ -1,15 +1,7 @@
 import { Box, Button, MenuItem, TextField } from "@mui/material"
 import { useCallback } from "react"
-
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { LicenseTypeMap, UserTypeMap } from "stringTemplates"
-import {
-  License,
-  LicenseRequestParameters,
-  LicenseType,
-  ManualLicenseGeneratorInfo,
-  User,
-} from "types"
 import { convertComponentType, convertLicenseExpiry, fetchJson } from "Utils"
 import {
   InputComponentType,
@@ -17,19 +9,25 @@ import {
   InputUID,
 } from "component/inputs"
 import { GeneratorWrapper } from "./generatorWrapper"
+import { LicenseType, User } from "types"
 
-export const ManualLicenseGenerator = () => {
-  const { control, handleSubmit, reset } = useForm<ManualLicenseGeneratorInfo>({
-    defaultValues: {
-      uid: "",
-      licenseExpiry: UserTypeMap[User.PARTNER].expiry,
-      componentType: [],
-      licenseType: LicenseType.SINGLE,
-    },
-  })
+export const LicenseGeneratorWithoutRecord: React.FC = () => {
+  const { control, handleSubmit, reset } =
+    useForm<License.GenerateLicense.GenerateLicenseWithoutRecord>({
+      defaultValues: {
+        uid: "",
+        licenseExpiry: UserTypeMap[User.PARTNER].expiry,
+        componentType: [],
+        licenseType: LicenseType.SINGLE,
+      },
+    })
+
+  interface FetchLicense {
+    license: string
+  }
 
   const generateLicense = useCallback<
-    SubmitHandler<ManualLicenseGeneratorInfo>
+    SubmitHandler<License.GenerateLicense.GenerateLicenseWithoutRecord>
   >(
     async ({ uid, licenseExpiry, licenseType, componentType }) => {
       if (!componentType.length) {
@@ -37,16 +35,15 @@ export const ManualLicenseGenerator = () => {
         return
       }
       const url = "/api/generateLicense"
-      const response = await fetchJson<LicenseRequestParameters, License>(
-        url,
-        "POST",
-        {
-          uid: uid,
-          licenseExpiryDate: convertLicenseExpiry(licenseExpiry),
-          licenseType: licenseType.toString(),
-          componentType: convertComponentType(componentType),
-        }
-      )
+      const response = await fetchJson<
+        License.API.RequestParameter,
+        FetchLicense
+      >(url, "POST", {
+        uid: uid,
+        licenseExpiryDate: convertLicenseExpiry(licenseExpiry),
+        licenseType: licenseType.toString(),
+        componentType: convertComponentType(componentType),
+      })
       if (!response.data) return
       await navigator.clipboard.writeText(
         `UID:\n${uid}\n\nLicense:\n${response.data.license}`
@@ -66,11 +63,7 @@ export const ManualLicenseGenerator = () => {
     >
       <InputUID control={control} />
       <InputLicenseExpiry control={control} />
-      <Controller
-        render={({ field }) => <InputComponentType {...field} />}
-        name="componentType"
-        control={control}
-      />
+      <InputComponentType control={control} />
       <Controller
         render={({ field }) => (
           <TextField {...field} label="License Type" fullWidth select>

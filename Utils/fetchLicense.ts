@@ -1,8 +1,6 @@
-import { RequestError } from "../types"
-
 interface LicenseReturnType {
   data?: string
-  error?: RequestError
+  error?: License.API.RequestError
 }
 
 export async function fetchLicense(url: string): Promise<LicenseReturnType> {

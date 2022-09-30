@@ -1,8 +1,7 @@
 import { TextField } from "@mui/material"
-import type { ReactHookFormController } from "component/types"
 import { Controller } from "react-hook-form"
 
-interface InputNameProps extends ReactHookFormController {}
+interface InputNameProps extends ReactHookForm.Controller {}
 
 export const InputName: React.FC<InputNameProps> = ({ ...props }) => {
   return (

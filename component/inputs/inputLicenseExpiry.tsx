@@ -1,9 +1,8 @@
 import { MenuItem, TextField } from "@mui/material"
-import { ReactHookFormController } from "../types"
 import { Controller } from "react-hook-form"
 import { UserTypeMap } from "stringTemplates"
 
-interface InputLicenseExpiry extends ReactHookFormController {}
+interface InputLicenseExpiry extends ReactHookForm.Controller {}
 
 export const InputLicenseExpiry: React.FC<InputLicenseExpiry> = ({
   ...props

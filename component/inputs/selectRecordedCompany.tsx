@@ -1,10 +1,8 @@
 import { MenuItem, TextField } from "@mui/material"
-import { ReactHookFormController } from "../types"
 import { Controller } from "react-hook-form"
-import type { CompanyList } from "types"
 
-interface SelectRecordedCompanyProps extends ReactHookFormController {
-  companyList: CompanyList[]
+interface SelectRecordedCompanyProps extends ReactHookForm.Controller {
+  companyList: License.GenerateLicense.RecordedCompanyList[]
 }
 
 export const SelectRecordedCompany: React.FC<SelectRecordedCompanyProps> = ({

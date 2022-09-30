@@ -1,12 +1,12 @@
 import { GeneratorWrapper } from "./generatorWrapper"
 import { useForm } from "react-hook-form"
-import type { CompanyList, ManualLicenseGeneratorInfo } from "types"
 import { InputName, InputUID, SelectRecordedCompany } from "component/inputs"
 import { GenerateLicensePageProps } from "pages/generateLicense"
 
-interface LicenseGeneratorInfo extends ManualLicenseGeneratorInfo {
+interface LicenseGenerator
+  extends License.GenerateLicense.GenerateLicenseWithoutRecord {
   name: string
-  recordedCompany: CompanyList[]
+  recordedCompany: License.GenerateLicense.RecordedCompanyList[]
 }
 
 interface LicenseGeneratorProps extends GenerateLicensePageProps {}
@@ -14,7 +14,7 @@ interface LicenseGeneratorProps extends GenerateLicensePageProps {}
 export const LicenseGenerator: React.FC<LicenseGeneratorProps> = ({
   companyList,
 }) => {
-  const { control } = useForm<LicenseGeneratorInfo>({
+  const { control } = useForm<LicenseGenerator>({
     defaultValues: {
       name: "",
       uid: "",

@@ -2,11 +2,10 @@ import Head from "next/head"
 import { createTheme, ThemeProvider } from "@mui/material"
 import { LicenseGenerator } from "component"
 import { GetServerSidePropsContext, NextPage } from "next"
-import { CompanyList } from "types"
 import { getRecordedCompanyList } from "./api/getRecordedCompanyList"
 
 export interface GenerateLicensePageProps {
-  companyList: CompanyList[]
+  companyList: License.GenerateLicense.RecordedCompanyList[]
 }
 
 const GenerateLicensePage: NextPage<GenerateLicensePageProps> = ({

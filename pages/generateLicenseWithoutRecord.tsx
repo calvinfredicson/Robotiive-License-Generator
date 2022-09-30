@@ -1,16 +1,16 @@
 import Head from "next/head"
 import { createTheme, ThemeProvider } from "@mui/material"
-import { ManualLicenseGenerator } from "../component"
 import { NextPage } from "next"
+import { LicenseGeneratorWithoutRecord } from "component"
 
 const ManualGenerate: NextPage = () => {
   const theme = createTheme()
   return (
     <ThemeProvider theme={theme}>
       <Head>
-        <title>Manual Generate License</title>
+        <title>Generate License Without Record</title>
       </Head>
-      <ManualLicenseGenerator />
+      <LicenseGeneratorWithoutRecord />
     </ThemeProvider>
   )
 }

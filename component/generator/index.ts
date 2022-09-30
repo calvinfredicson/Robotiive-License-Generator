@@ -1,2 +1,2 @@
-export * from "./manualGenerateLicense"
+export * from "./licenseGeneratorWithoutRecord"
 export * from "./licenseGenerator"
