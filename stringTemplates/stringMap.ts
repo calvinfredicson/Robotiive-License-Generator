@@ -1,4 +1,4 @@
-import { ComponentType, LicenseType, User } from "../types"
+import { ComponentType, LicenseType, RecordType, User } from "../types"
 
 export const LicenseTypeMap: Record<LicenseType, string> = {
   [LicenseType.SINGLE]: "Single",
@@ -25,4 +25,9 @@ export const UserTypeMap: Record<User, { type: string; expiry: number }> = {
     type: "Customer",
     expiry: 1,
   },
+}
+
+export const RecordTypeMap: Record<RecordType, string> = {
+  [RecordType.CUSTOMER]: "Customer",
+  [RecordType.PARTNER]: "Partner",
 }
