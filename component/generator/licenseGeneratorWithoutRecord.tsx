@@ -1,5 +1,5 @@
 import { Box, Button, MenuItem, TextField } from "@mui/material"
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { LicenseTypeMap, UserTypeMap } from "stringTemplates"
 import { convertComponentType, convertLicenseExpiry, fetchJson } from "Utils"
@@ -10,6 +10,7 @@ import {
 } from "component/inputs"
 import { GeneratorWrapper } from "./generatorWrapper"
 import { LicenseType, User } from "types"
+import { LicenseStringDialog } from "dialogs"
 
 export const LicenseGeneratorWithoutRecord: React.FC = () => {
   const { control, handleSubmit, reset } =
@@ -25,6 +26,16 @@ export const LicenseGeneratorWithoutRecord: React.FC = () => {
   interface FetchLicense {
     license: string
   }
+
+  interface LicenseInfo {
+    uid: string
+    license: string
+  }
+
+  const [licenseInfo, setLicenseInfo] = useState<LicenseInfo>({
+    uid: "",
+    license: "",
+  })
 
   const generateLicense = useCallback<
     SubmitHandler<License.GenerateLicense.GenerateLicenseWithoutRecord>
@@ -45,13 +56,11 @@ export const LicenseGeneratorWithoutRecord: React.FC = () => {
         componentType: convertComponentType(componentType),
       })
       if (!response.data) return
-      await navigator.clipboard.writeText(
-        `UID:\n${uid}\n\nLicense:\n${response.data.license}`
-      )
       reset()
-      window.alert(
-        "Your license is successfully generated and copied to your clipboard"
-      )
+      setLicenseInfo({
+        uid: uid,
+        license: response.data.license,
+      })
     },
     [reset]
   )
@@ -82,6 +91,10 @@ export const LicenseGeneratorWithoutRecord: React.FC = () => {
           Generate
         </Button>
       </Box>
+      <LicenseStringDialog
+        uid={licenseInfo.uid}
+        licenseString={licenseInfo.license}
+      />
     </GeneratorWrapper>
   )
 }

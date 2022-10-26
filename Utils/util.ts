@@ -22,3 +22,7 @@ export function convertComponentType(componentString: string[]) {
   })
   return validComponentTypeList.toString()
 }
+
+export async function delay(timeout: number) {
+  return new Promise((resolve) => setTimeout(resolve, timeout))
+}
