@@ -25,11 +25,11 @@ export enum OperationType {
 }
 
 export enum PartnerRecordType {
-  PERSONAL = "personal",
-  CUSTOMER = "customer",
+  PERSONAL = "PERSONAL",
+  CUSTOMER = "CUSTOMER",
 }
 
 export enum RecordType {
-  CUSTOMER = 0,
-  PARTNER = 1,
+  CUSTOMER = "CUSTOMER",
+  PARTNER = "PARTNER",
 }

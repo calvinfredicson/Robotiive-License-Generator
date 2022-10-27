@@ -1,10 +1,12 @@
 import { MenuItem, TextField } from "@mui/material"
 import { Controller } from "react-hook-form"
-import { RecordTypeMap } from "stringTemplates"
+import { PartnerRecordTypeMap } from "stringTemplates"
 
-interface InputRecordTypeProps extends ReactHookForm.Controller {}
+interface InputPartnerRecordTypeProps extends ReactHookForm.Controller {}
 
-export const InputRecordType: React.FC<InputRecordTypeProps> = (props) => {
+export const InputPartnerRecordType: React.FC<InputPartnerRecordTypeProps> = ({
+  ...props
+}) => {
   return (
     <Controller
       render={({ field }) => (
@@ -15,14 +17,14 @@ export const InputRecordType: React.FC<InputRecordTypeProps> = (props) => {
           fullWidth
           select
         >
-          {Object.entries(RecordTypeMap).map(([key, value]) => (
+          {Object.entries(PartnerRecordTypeMap).map(([key, value]) => (
             <MenuItem key={key} value={value}>
               {value}
             </MenuItem>
           ))}
         </TextField>
       )}
-      name="recordType"
+      name="partnerRecordType"
       {...props}
     />
   )
