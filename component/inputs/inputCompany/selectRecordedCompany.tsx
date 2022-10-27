@@ -1,4 +1,4 @@
-import { MenuItem, TextField } from "@mui/material"
+import { MenuItem, TextField, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { Controller } from "react-hook-form"
 import { fetchJson } from "Utils"
@@ -45,6 +45,11 @@ export const SelectRecordedCompany: React.FC<SelectRecordedCompanyProps> = ({
               {company["Company Name"]}
             </MenuItem>
           ))}
+          {!companyList.length ? (
+            <MenuItem>
+              <Typography>Fetching data...</Typography>
+            </MenuItem>
+          ) : null}
         </TextField>
       )}
       name="companyName"
