@@ -1,5 +1,5 @@
 import { GeneratorWrapper } from "./generatorWrapper"
-import { useForm, useWatch } from "react-hook-form"
+import { SubmitHandler, useForm, useWatch } from "react-hook-form"
 import { InputName, InputPartnerRecordType, InputUID } from "component/inputs"
 import { Box, Button } from "@mui/material"
 import { useCallback, useMemo, useState } from "react"
@@ -16,7 +16,7 @@ interface LicenseGenerator
 }
 
 export const LicenseGenerator: React.FC = () => {
-  const { control } = useForm<LicenseGenerator>({
+  const { control, handleSubmit } = useForm<LicenseGenerator>({
     defaultValues: {
       name: "",
       uid: "",
@@ -40,8 +40,17 @@ export const LicenseGenerator: React.FC = () => {
     [recordType]
   )
 
+  const generateLicenseWithRecord = useCallback<
+    SubmitHandler<LicenseGenerator>
+  >(({ name, uid, companyName, recordType, partnerRecordType }) => {
+    console.log({ name, uid, companyName, recordType, partnerRecordType })
+  }, [])
+
   return (
-    <GeneratorWrapper title="Generate License">
+    <GeneratorWrapper
+      title="Generate License"
+      handleSubmit={handleSubmit(generateLicenseWithRecord)}
+    >
       <Box display="flex" gap={2}>
         <Button
           onClick={() => selectFunctionType(OperationType.CREATE)}
@@ -64,6 +73,11 @@ export const LicenseGenerator: React.FC = () => {
       <InputCompany control={control} operationType={functionType} />
       <InputRecordType control={control} />
       {isPartnerRecord ? <InputPartnerRecordType control={control} /> : null}
+      <Box display="flex" flexDirection="column" gap={1}>
+        <Button type="submit" fullWidth variant="contained" size="large">
+          Generate
+        </Button>
+      </Box>
     </GeneratorWrapper>
   )
 }
