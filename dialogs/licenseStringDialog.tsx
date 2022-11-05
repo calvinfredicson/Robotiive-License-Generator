@@ -24,6 +24,7 @@ const CustomDialog = styled(Dialog)(({ theme }) => ({
 interface LicenseStringDialogProps {
   uid: string
   licenseString: string
+  onClose: () => void
 }
 
 enum CopyButtonText {
@@ -34,6 +35,7 @@ enum CopyButtonText {
 export const LicenseStringDialog: React.FC<LicenseStringDialogProps> = ({
   uid,
   licenseString,
+  onClose,
 }) => {
   const [open, setOpen] = useState(false)
   const handleCopy = useCallback(async () => {
@@ -48,8 +50,9 @@ export const LicenseStringDialog: React.FC<LicenseStringDialogProps> = ({
   const [copyButtonText, setCopyButtonText] = useState(CopyButtonText.COPY)
 
   const handleClose = useCallback(() => {
+    onClose()
     setOpen(false)
-  }, [])
+  }, [onClose])
 
   useEffect(() => {
     if (!licenseString) return
@@ -59,7 +62,9 @@ export const LicenseStringDialog: React.FC<LicenseStringDialogProps> = ({
   return (
     <CustomDialog open={open}>
       <DialogTitle sx={{ m: 0, p: 2 }}>
-        <Typography variant="h6">License String</Typography>
+        <Typography variant="inherit" fontWeight="bold">
+          License String
+        </Typography>
         <IconButton
           aria-label="close"
           onClick={handleClose}

@@ -23,13 +23,17 @@ export const ComponentTypeMap: Record<ComponentType, string> = {
 }
 
 export const UserTypeMap: Record<User, { type: string; expiry: number }> = {
+  [User.CUSTOMER]: {
+    type: "Customer",
+    expiry: 1,
+  },
   [User.PARTNER]: {
     type: "Partner",
     expiry: 3,
   },
-  [User.CUSTOMER]: {
-    type: "Customer",
-    expiry: 1,
+  [User.DEAL]: {
+    type: "Deal",
+    expiry: 12,
   },
 }
 

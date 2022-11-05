@@ -1,5 +1,5 @@
 declare namespace License.GenerateLicense {
-  interface GenerateLicenseWithoutRecord {
+  interface GenerateLicense {
     uid: string
     licenseExpiry: number
     licenseType: number

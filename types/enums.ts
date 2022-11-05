@@ -15,8 +15,9 @@ export const enum ComponentType {
 }
 
 export const enum User {
-  PARTNER = 0,
-  CUSTOMER = 1,
+  CUSTOMER = 0,
+  PARTNER = 1,
+  DEAL = 2,
 }
 
 export enum OperationType {

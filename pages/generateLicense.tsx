@@ -1,9 +1,9 @@
 import Head from "next/head"
 import { createTheme, ThemeProvider } from "@mui/material"
-import { LicenseGenerator } from "component"
 import { NextPage } from "next"
+import { LicenseGenerator } from "component"
 
-const GenerateLicensePage: NextPage = () => {
+const GenerateLicense: NextPage = () => {
   const theme = createTheme()
   return (
     <ThemeProvider theme={theme}>
@@ -15,4 +15,4 @@ const GenerateLicensePage: NextPage = () => {
   )
 }
 
-export default GenerateLicensePage
+export default GenerateLicense
