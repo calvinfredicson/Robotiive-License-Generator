@@ -28,13 +28,13 @@ const RootPage: NextPage = () => {
       }}
     >
       <Box display="flex" flexDirection="column" gap={2}>
-        <Button
+        {/* <Button
           size="large"
           variant="contained"
           onClick={() => navigateRoute(appRoute.licenseGeneratorWithoutRecord)}
         >
           Generate License Without Record
-        </Button>
+        </Button> */}
         <Button
           size="large"
           variant="contained"
