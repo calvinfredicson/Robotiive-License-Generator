@@ -1,3 +1,5 @@
 export * from "./appendLicenseRecordRow"
 export * from "./getRecordedCompanyList"
 export * from "./createNewSheet"
+export * from "./getOwnerList"
+export * from "./getRecordedProviderList"

@@ -39,10 +39,11 @@ export const SelectRecordedCompany: React.FC<SelectRecordedCompanyProps> = ({
         >
           {companyList.map((company) => (
             <MenuItem
-              key={company["Company Name"]}
-              value={company["Company Name"]}
+              key={company["Company Chinese Name"]}
+              value={company["Company Chinese Name"]}
             >
-              {company["Company Name"]}
+              {company["Company English Name"]} (
+              {company["Company Chinese Name"]})
             </MenuItem>
           ))}
           {!companyList.length ? (

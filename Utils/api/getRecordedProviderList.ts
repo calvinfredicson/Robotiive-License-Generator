@@ -1,7 +1,7 @@
 import { googleSheetDataToObject } from "Utils"
 import { setupGoogleSheetApi } from "Utils/googleApi"
 
-export async function getRecordedCompanyList(): Promise<
+export async function getRecordedProviderList(): Promise<
   Record<string, string>[] | undefined
 > {
   try {
@@ -9,14 +9,14 @@ export async function getRecordedCompanyList(): Promise<
     const spreadsheetId = "13bJFQJH3JfoEfvdx2I8KmIXqtRStMTaRbRpmpEUYURM"
 
     // get recorded company list from google sheets table
-    const companyList = await googleSheets.spreadsheets.values.get({
+    const providerList = await googleSheets.spreadsheets.values.get({
       auth,
       spreadsheetId,
-      range: "License Record!A:B",
+      range: "License Record!K:L",
     })
 
-    if (!companyList.data.values) return
-    return googleSheetDataToObject(companyList.data.values)
+    if (!providerList.data.values) return
+    return googleSheetDataToObject(providerList.data.values)
   } catch (err) {
     console.log(err)
     return

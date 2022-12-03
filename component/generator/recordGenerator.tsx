@@ -15,7 +15,7 @@ interface LicenseGenerator extends License.GenerateLicense.GenerateLicense {
 }
 
 export const RecordGenerator: React.FC = () => {
-  const { control, handleSubmit } = useForm<LicenseGenerator>({
+  const { control, handleSubmit, watch } = useForm<LicenseGenerator>({
     defaultValues: {
       name: "",
       uid: "",
@@ -24,6 +24,8 @@ export const RecordGenerator: React.FC = () => {
       partnerRecordType: PartnerRecordTypeMap.PERSONAL,
     },
   })
+
+  console.log(watch())
   const recordType = useWatch({
     control,
     name: "recordType",
@@ -45,9 +47,14 @@ export const RecordGenerator: React.FC = () => {
     console.log({ name, uid, companyName, recordType, partnerRecordType })
   }, [])
 
+  const AppTitle = useMemo(() => {
+    if (functionType === OperationType.CREATE) return "Create Company"
+    return "Update Company"
+  }, [functionType])
+
   return (
     <GeneratorWrapper
-      title="Generate License"
+      title={AppTitle}
       handleSubmit={handleSubmit(generateLicenseWithRecord)}
     >
       <Box display="flex" gap={2}>
