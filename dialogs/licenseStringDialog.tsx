@@ -9,7 +9,9 @@ import {
   styled,
   Typography,
 } from "@mui/material"
-import { useCallback, useEffect, useState } from "react"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useCallback, useState } from "react"
 import { delay } from "Utils"
 
 const CustomDialog = styled(Dialog)(({ theme }) => ({
@@ -22,9 +24,10 @@ const CustomDialog = styled(Dialog)(({ theme }) => ({
 }))
 
 interface LicenseStringDialogProps {
+  open: boolean
   uid: string
   licenseString: string
-  onClose: () => void
+  handleDialogClose: () => void
 }
 
 enum CopyButtonText {
@@ -35,9 +38,19 @@ enum CopyButtonText {
 export const LicenseStringDialog: React.FC<LicenseStringDialogProps> = ({
   uid,
   licenseString,
-  onClose,
+  open,
+  handleDialogClose,
 }) => {
-  const [open, setOpen] = useState(false)
+  const router = useRouter()
+  const navigateToGenerateLicenseRecord = useCallback(() => {
+    router.push({
+      pathname: "/generateLicenseRecord",
+      query: {
+        data: "some passed data",
+        another: "should be passed",
+      },
+    })
+  }, [router])
   const handleCopy = useCallback(async () => {
     await navigator.clipboard.writeText(
       `UID:\n${uid}\n\nLicense:\n${licenseString}`
@@ -49,16 +62,6 @@ export const LicenseStringDialog: React.FC<LicenseStringDialogProps> = ({
 
   const [copyButtonText, setCopyButtonText] = useState(CopyButtonText.COPY)
 
-  const handleClose = useCallback(() => {
-    onClose()
-    setOpen(false)
-  }, [onClose])
-
-  useEffect(() => {
-    if (!licenseString) return
-    setOpen(true)
-  }, [licenseString])
-
   return (
     <CustomDialog open={open}>
       <DialogTitle sx={{ m: 0, p: 2 }}>
@@ -67,7 +70,7 @@ export const LicenseStringDialog: React.FC<LicenseStringDialogProps> = ({
         </Typography>
         <IconButton
           aria-label="close"
-          onClick={handleClose}
+          onClick={handleDialogClose}
           sx={{
             position: "absolute",
             right: 8,
@@ -84,6 +87,18 @@ export const LicenseStringDialog: React.FC<LicenseStringDialogProps> = ({
       <DialogActions>
         <Button autoFocus onClick={handleCopy}>
           {copyButtonText}
+        </Button>
+        <Button onClick={navigateToGenerateLicenseRecord}>
+          {/* <Link
+            href={{
+              pathname: "/generateLicenseRecord",
+              query: {
+                data: "some passed data",
+                another: "should be passed",
+              },
+            }}
+          ></Link> */}
+          Generate Record
         </Button>
       </DialogActions>
     </CustomDialog>

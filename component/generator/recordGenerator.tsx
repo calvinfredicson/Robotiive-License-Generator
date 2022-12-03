@@ -6,6 +6,7 @@ import { useCallback, useMemo, useState } from "react"
 import { OperationType } from "types"
 import { InputCompany, InputRecordType } from "component/inputs"
 import { PartnerRecordTypeMap, RecordTypeMap } from "stringTemplates"
+import { useRouter } from "next/router"
 
 interface LicenseGenerator extends License.GenerateLicense.GenerateLicense {
   name: string
@@ -15,7 +16,9 @@ interface LicenseGenerator extends License.GenerateLicense.GenerateLicense {
 }
 
 export const RecordGenerator: React.FC = () => {
-  const { control, handleSubmit, watch } = useForm<LicenseGenerator>({
+  const router = useRouter()
+  console.log(router.query)
+  const { control, handleSubmit } = useForm<LicenseGenerator>({
     defaultValues: {
       name: "",
       uid: "",
@@ -25,7 +28,6 @@ export const RecordGenerator: React.FC = () => {
     },
   })
 
-  console.log(watch())
   const recordType = useWatch({
     control,
     name: "recordType",

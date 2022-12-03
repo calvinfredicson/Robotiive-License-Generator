@@ -22,6 +22,11 @@ export const LicenseGenerator: React.FC = () => {
         licenseType: LicenseType.SINGLE,
       },
     })
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const handleDialogClose = useCallback(() => {
+    setDialogOpen(false)
+    reset()
+  }, [reset])
 
   interface FetchLicense {
     license: string
@@ -44,6 +49,7 @@ export const LicenseGenerator: React.FC = () => {
       window.alert("Please choose component Type")
       return
     }
+    setDialogOpen(true)
     const url = "/api/generateLicense"
     const response = await fetchJson<
       License.API.RequestParameter,
@@ -88,9 +94,10 @@ export const LicenseGenerator: React.FC = () => {
         </Button>
       </Box>
       <LicenseStringDialog
+        open={dialogOpen}
         uid={licenseInfo.uid}
         licenseString={licenseInfo.license}
-        onClose={reset}
+        handleDialogClose={handleDialogClose}
       />
     </GeneratorWrapper>
   )
