@@ -9,7 +9,6 @@ import {
   styled,
   Typography,
 } from "@mui/material"
-import Link from "next/link"
 import { useRouter } from "next/router"
 import { useCallback, useState } from "react"
 import { delay } from "Utils"
@@ -46,11 +45,11 @@ export const LicenseStringDialog: React.FC<LicenseStringDialogProps> = ({
     router.push({
       pathname: "/generateLicenseRecord",
       query: {
-        data: "some passed data",
-        another: "should be passed",
+        uid: uid,
+        licenseString: licenseString,
       },
     })
-  }, [router])
+  }, [licenseString, router, uid])
   const handleCopy = useCallback(async () => {
     await navigator.clipboard.writeText(
       `UID:\n${uid}\n\nLicense:\n${licenseString}`
@@ -89,15 +88,6 @@ export const LicenseStringDialog: React.FC<LicenseStringDialogProps> = ({
           {copyButtonText}
         </Button>
         <Button onClick={navigateToGenerateLicenseRecord}>
-          {/* <Link
-            href={{
-              pathname: "/generateLicenseRecord",
-              query: {
-                data: "some passed data",
-                another: "should be passed",
-              },
-            }}
-          ></Link> */}
           Generate Record
         </Button>
       </DialogActions>

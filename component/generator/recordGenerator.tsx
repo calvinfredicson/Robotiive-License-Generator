@@ -1,6 +1,6 @@
 import { GeneratorWrapper } from "./generatorWrapper"
 import { SubmitHandler, useForm, useWatch } from "react-hook-form"
-import { InputName, InputPartnerRecordType, InputUID } from "component/inputs"
+import { InputPartnerRecordType, InputText } from "component/inputs"
 import { Box, Button } from "@mui/material"
 import { useCallback, useMemo, useState } from "react"
 import { OperationType } from "types"
@@ -13,15 +13,23 @@ interface LicenseGenerator extends License.GenerateLicense.GenerateLicense {
   companyName: string
   recordType: string
   partnerRecordType: string
+  licenseString: string
+}
+
+interface PassedLicenseGeneratedData {
+  uid: string
+  licenseString: string
 }
 
 export const RecordGenerator: React.FC = () => {
   const router = useRouter()
-  console.log(router.query)
+  const { uid, licenseString } =
+    router.query as unknown as PassedLicenseGeneratedData
   const { control, handleSubmit } = useForm<LicenseGenerator>({
     defaultValues: {
       name: "",
-      uid: "",
+      uid: uid ?? "",
+      licenseString: licenseString ?? "",
       companyName: "",
       recordType: RecordTypeMap.CUSTOMER,
       partnerRecordType: PartnerRecordTypeMap.PERSONAL,
@@ -76,8 +84,9 @@ export const RecordGenerator: React.FC = () => {
           Update company
         </Button>
       </Box>
-      <InputName control={control} />
-      <InputUID control={control} />
+      <InputText name="name" control={control} />
+      <InputText name="uid" control={control} />
+      <InputText name="licenseString" control={control} />
       <InputCompany control={control} operationType={functionType} />
       <InputRecordType control={control} />
       {isPartnerRecord ? <InputPartnerRecordType control={control} /> : null}

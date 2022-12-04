@@ -23,10 +23,7 @@ export const LicenseGenerator: React.FC = () => {
       },
     })
   const [dialogOpen, setDialogOpen] = useState(false)
-  const handleDialogClose = useCallback(() => {
-    setDialogOpen(false)
-    reset()
-  }, [reset])
+  const handleDialogClose = useCallback(() => setDialogOpen(false), [])
 
   interface FetchLicense {
     license: string
@@ -67,6 +64,8 @@ export const LicenseGenerator: React.FC = () => {
     })
   }, [])
 
+  const handleReset = useCallback(() => reset(), [reset])
+
   return (
     <GeneratorWrapper
       title="License Generator"
@@ -91,6 +90,15 @@ export const LicenseGenerator: React.FC = () => {
       <Box display="flex" flexDirection="column" gap={1}>
         <Button type="submit" fullWidth variant="contained" size="large">
           Generate
+        </Button>
+        <Button
+          fullWidth
+          color="error"
+          variant="contained"
+          size="large"
+          onClick={handleReset}
+        >
+          Reset
         </Button>
       </Box>
       <LicenseStringDialog
