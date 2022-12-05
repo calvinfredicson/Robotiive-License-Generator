@@ -1,5 +1,5 @@
 import { OperationType } from "types"
-import { InputNewCompany } from "./inputNewCompany"
+import { InputText } from "../inputText"
 import { SelectRecordedCompany } from "./selectRecordedCompany"
 
 interface InputCompanyProps extends ReactHookForm.Controller {
@@ -11,6 +11,6 @@ export const InputCompany: React.FC<InputCompanyProps> = ({
   control,
 }) => {
   if (operationType === OperationType.CREATE)
-    return <InputNewCompany control={control} />
+    return <InputText name="companyName" control={control} />
   return <SelectRecordedCompany control={control} />
 }
