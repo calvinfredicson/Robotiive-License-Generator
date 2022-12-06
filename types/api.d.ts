@@ -6,6 +6,11 @@ declare namespace License.API {
     licenseType: string
   }
 
+  interface Company {
+    "Company Chinese Name": string
+    "Company English Name": string
+  }
+
   interface Response {
     license: string
   }

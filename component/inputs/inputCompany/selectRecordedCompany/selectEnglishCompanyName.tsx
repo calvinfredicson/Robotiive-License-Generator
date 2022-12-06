@@ -3,7 +3,7 @@ import { Controller } from "react-hook-form"
 
 export interface SelectEnglishCompanyNameProps
   extends ReactHookForm.Controller {
-  companyList: Record<string, string>[]
+  companyList: License.API.Company[]
 }
 
 export const SelectEnglishCompanyName: React.FC<

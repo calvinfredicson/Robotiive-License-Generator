@@ -1,19 +1,24 @@
 import { GeneratorWrapper } from "./generatorWrapper"
 import { SubmitHandler, useForm, useWatch } from "react-hook-form"
-import { InputPartnerRecordType, InputText } from "component/inputs"
+import { InputOwnerName, InputText } from "component/inputs"
 import { Box, Button } from "@mui/material"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { OperationType } from "types"
 import { InputCompany, InputRecordType } from "component/inputs"
 import { PartnerRecordTypeMap, RecordTypeMap } from "stringTemplates"
 import { useRouter } from "next/router"
+import { InputProviderName } from "component/inputs/inputProviderName"
+import { fetchJson } from "Utils"
 
 interface LicenseGenerator extends License.GenerateLicense.GenerateLicense {
   name: string
   companyName: string
   recordType: string
+  ownerName: string
   partnerRecordType: string
   licenseString: string
+  robotiiveVersion: string
+  providerName: string
 }
 
 interface PassedLicenseGeneratedData {
@@ -23,6 +28,25 @@ interface PassedLicenseGeneratedData {
 
 export const RecordGenerator: React.FC = () => {
   const router = useRouter()
+  const [companyList, setCompanyList] = useState<License.API.Company[]>([])
+
+  useEffect(() => {
+    const fetchRecordedCompany = async () => {
+      const url = "/api/getRecordedCompanyList"
+      const { data: companyList } = await fetchJson<
+        void,
+        License.API.Company[]
+      >(url, "get")
+      if (!companyList) return []
+      return setCompanyList(companyList)
+    }
+    try {
+      fetchRecordedCompany()
+    } catch (err) {
+      console.log(err)
+    }
+  }, [])
+
   const { uid, licenseString } =
     router.query as unknown as PassedLicenseGeneratedData
   const { control, handleSubmit } = useForm<LicenseGenerator>({
@@ -30,9 +54,12 @@ export const RecordGenerator: React.FC = () => {
       name: "",
       uid: uid ?? "",
       licenseString: licenseString ?? "",
+      ownerName: "",
       companyName: "",
       recordType: RecordTypeMap.CUSTOMER,
       partnerRecordType: PartnerRecordTypeMap.PERSONAL,
+      robotiiveVersion: "",
+      providerName: "",
     },
   })
 
@@ -87,9 +114,15 @@ export const RecordGenerator: React.FC = () => {
       <InputText name="name" control={control} />
       <InputText name="uid" control={control} />
       <InputText name="licenseString" control={control} />
-      <InputCompany control={control} operationType={functionType} />
+      <InputText name="robotiiveVersion" control={control} />
+      <InputOwnerName control={control} />
+      <InputCompany
+        control={control}
+        companyList={companyList}
+        operationType={functionType}
+      />
       <InputRecordType control={control} />
-      {isPartnerRecord ? <InputPartnerRecordType control={control} /> : null}
+      <InputProviderName companyList={companyList} control={control} />
       <Box display="flex" flexDirection="column" gap={1}>
         <Button type="submit" fullWidth variant="contained" size="large">
           Generate
