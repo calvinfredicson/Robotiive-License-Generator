@@ -1,29 +1,22 @@
-import { google } from "googleapis"
-import { objectToGoogleSheetData } from "Utils"
+import { objectToGoogleSheetRowFormat } from "Utils"
+import { setupGoogleSheetApi } from "Utils/googleApi"
+import { getRecordHeader } from "./getRecordHeader"
 
 export async function appendLicenseRecordRow(
-  startRange: number,
-  endRange: number,
+  startRange: string,
+  endRange: string,
   sheetName: string,
-  updateData: Record<string, string>[]
+  updateData: Record<string, string>
 ) {
   try {
-    const auth = await new google.auth.GoogleAuth({
-      credentials: {
-        client_email: process.env["CLIENT_EMAIL"],
-        private_key: process.env["PRIVATE_KEY"],
-      },
-      scopes: "https://www.googleapis.com/auth/spreadsheets",
-    })
-
-    // create client instance for auth
-    const client = await auth.getClient()
-    const googleSheets = google.sheets({ version: "v4", auth: client })
+    const { googleSheets, auth } = await setupGoogleSheetApi()
     const spreadsheetId = "13bJFQJH3JfoEfvdx2I8KmIXqtRStMTaRbRpmpEUYURM"
 
-    // test sheet
-    // const spreadsheetId = "1iMTWDGywnELfkTIfkTClK20ZtaSX9AHOGNrV3QqJ5Jg"
+    // get record header
+    const recordHeader = await getRecordHeader(startRange, endRange)
+    if (!recordHeader || !recordHeader[0]) return
 
+    console.log(objectToGoogleSheetRowFormat(updateData, recordHeader[0]))
     // append row to spreadsheet
     const googleSheetRange = `${sheetName}!${startRange}:${endRange}`
     const appendRow = await googleSheets.spreadsheets.values.append({
@@ -32,7 +25,7 @@ export async function appendLicenseRecordRow(
       spreadsheetId,
       range: googleSheetRange,
       requestBody: {
-        values: objectToGoogleSheetData(updateData),
+        values: objectToGoogleSheetRowFormat(updateData, recordHeader[0]),
       },
     })
     if (appendRow.status !== 200) return false

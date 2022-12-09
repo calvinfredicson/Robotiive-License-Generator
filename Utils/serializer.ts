@@ -14,10 +14,16 @@ export function googleSheetDataToObject(unspecifiedDimensionData: string[][]) {
   })
 }
 
-export function objectToGoogleSheetData(object: Record<string, string>[]) {
+export function objectToGoogleSheetRowFormat(
+  object: Record<string, string>,
+  headerList: string[]
+) {
   const googleSheetDataFormat: string[][] = []
-  object.forEach((item) => {
-    googleSheetDataFormat.push(Object.values(item))
+  const rowContentList: string[] = []
+  headerList.forEach((header) => {
+    // TODO fix type
+    rowContentList.push((object[header] as any) ?? "")
   })
+  googleSheetDataFormat.push(rowContentList)
   return googleSheetDataFormat
 }
