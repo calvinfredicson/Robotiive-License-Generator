@@ -1,11 +1,10 @@
-import dateFormat from "dateformat"
 import { ComponentType } from "../types"
 import { ComponentTypeMap } from "../stringTemplates"
 
-export function convertLicenseExpiry(licenseExpiry: number) {
-  return dateFormat(
-    new Date(new Date().setMonth(new Date().getMonth() + licenseExpiry)),
-    "yyyy-mm-dd"
+export function calculateLicenseExpiryDate(licenseActivePeriod: number) {
+  const currentDate = new Date()
+  return new Date(
+    currentDate.setMonth(currentDate.getMonth() + licenseActivePeriod)
   )
 }
 

@@ -1,5 +1,5 @@
 import { GeneratorWrapper } from "./generatorWrapper"
-import { SubmitHandler, useForm, useWatch } from "react-hook-form"
+import { SubmitHandler, useForm } from "react-hook-form"
 import { InputOwnerName, InputText } from "component/inputs"
 import { Box, Button } from "@mui/material"
 import { useCallback, useEffect, useMemo, useState } from "react"
@@ -24,6 +24,7 @@ interface LicenseGenerator extends License.GenerateLicense.GenerateLicense {
 interface PassedLicenseGeneratedData {
   uid: string
   licenseString: string
+  licenseExpiry: string
 }
 
 export const RecordGenerator: React.FC = () => {
@@ -47,8 +48,10 @@ export const RecordGenerator: React.FC = () => {
     }
   }, [])
 
-  const { uid, licenseString } =
+  const { uid, licenseString, licenseExpiry } =
     router.query as unknown as PassedLicenseGeneratedData
+
+  console.log({ uid, licenseString, licenseExpiry })
   const { control, handleSubmit } = useForm<LicenseGenerator>({
     defaultValues: {
       name: "",
@@ -63,19 +66,10 @@ export const RecordGenerator: React.FC = () => {
     },
   })
 
-  const recordType = useWatch({
-    control,
-    name: "recordType",
-  })
   const [functionType, setFunctionType] = useState(OperationType.CREATE)
   const selectFunctionType = useCallback(
     (functionType: OperationType) => setFunctionType(functionType),
     []
-  )
-
-  const isPartnerRecord = useMemo(
-    () => recordType === RecordTypeMap.PARTNER,
-    [recordType]
   )
 
   const generateLicenseWithRecord = useCallback<
@@ -125,7 +119,7 @@ export const RecordGenerator: React.FC = () => {
       <InputProviderName companyList={companyList} control={control} />
       <Box display="flex" flexDirection="column" gap={1}>
         <Button type="submit" fullWidth variant="contained" size="large">
-          Generate
+          Generate Record
         </Button>
       </Box>
     </GeneratorWrapper>

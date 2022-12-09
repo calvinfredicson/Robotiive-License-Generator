@@ -9,7 +9,7 @@ import {
   styled,
   Typography,
 } from "@mui/material"
-import { useRouter } from "next/router"
+import type { LicenseInfo } from "component"
 import { useCallback, useState } from "react"
 import { delay } from "Utils"
 
@@ -22,10 +22,9 @@ const CustomDialog = styled(Dialog)(({ theme }) => ({
   },
 }))
 
-interface LicenseStringDialogProps {
+interface LicenseDialogProps {
   open: boolean
-  uid: string
-  licenseString: string
+  displayContent: LicenseInfo
   handleDialogClose: () => void
 }
 
@@ -34,30 +33,17 @@ enum CopyButtonText {
   COPY = "Copy Info",
 }
 
-export const LicenseStringDialog: React.FC<LicenseStringDialogProps> = ({
-  uid,
-  licenseString,
+export const LicenseDialog: React.FC<LicenseDialogProps> = ({
+  displayContent: { uid, license },
   open,
   handleDialogClose,
 }) => {
-  const router = useRouter()
-  const navigateToGenerateLicenseRecord = useCallback(() => {
-    router.push({
-      pathname: "/generateLicenseRecord",
-      query: {
-        uid: uid,
-        licenseString: licenseString,
-      },
-    })
-  }, [licenseString, router, uid])
   const handleCopy = useCallback(async () => {
-    await navigator.clipboard.writeText(
-      `UID:\n${uid}\n\nLicense:\n${licenseString}`
-    )
+    await navigator.clipboard.writeText(`UID:\n${uid}\n\nLicense:\n${license}`)
     setCopyButtonText(CopyButtonText.COPIED)
     await delay(2000)
     setCopyButtonText(CopyButtonText.COPY)
-  }, [licenseString, uid])
+  }, [license, uid])
 
   const [copyButtonText, setCopyButtonText] = useState(CopyButtonText.COPY)
 
@@ -81,14 +67,11 @@ export const LicenseStringDialog: React.FC<LicenseStringDialogProps> = ({
         </IconButton>
       </DialogTitle>
       <DialogContent dividers>
-        <Typography sx={{ wordBreak: "break-all" }}>{licenseString}</Typography>
+        <Typography sx={{ wordBreak: "break-all" }}>{license}</Typography>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleCopy}>
           {copyButtonText}
-        </Button>
-        <Button onClick={navigateToGenerateLicenseRecord}>
-          Generate Record
         </Button>
       </DialogActions>
     </CustomDialog>

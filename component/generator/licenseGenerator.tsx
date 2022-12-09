@@ -1,8 +1,12 @@
 import { Box, Button, MenuItem, TextField } from "@mui/material"
 import { useCallback, useState } from "react"
-import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import { Controller, SubmitHandler, useForm, useWatch } from "react-hook-form"
 import { LicenseTypeMap, UserTypeMap } from "stringTemplates"
-import { convertComponentType, convertLicenseExpiry, fetchJson } from "Utils"
+import {
+  convertComponentType,
+  calculateLicenseExpiryDate,
+  fetchJson,
+} from "Utils"
 import {
   InputComponentType,
   InputLicenseExpiry,
@@ -10,9 +14,21 @@ import {
 } from "component/inputs"
 import { GeneratorWrapper } from "./generatorWrapper"
 import { LicenseType, User } from "types"
-import { LicenseStringDialog } from "dialogs"
+import { LicenseDialog } from "dialogs"
+import dateFormat from "dateformat"
+import { useRouter } from "next/router"
+
+interface FetchLicense {
+  license: string
+}
+
+export interface LicenseInfo {
+  uid: string
+  license: string
+}
 
 export const LicenseGenerator: React.FC = () => {
+  const router = useRouter()
   const { control, handleSubmit, reset } =
     useForm<License.GenerateLicense.GenerateLicense>({
       defaultValues: {
@@ -24,20 +40,28 @@ export const LicenseGenerator: React.FC = () => {
     })
   const [dialogOpen, setDialogOpen] = useState(false)
   const handleDialogClose = useCallback(() => setDialogOpen(false), [])
-
-  interface FetchLicense {
-    license: string
-  }
-
-  interface LicenseInfo {
-    uid: string
-    license: string
-  }
-
   const [licenseInfo, setLicenseInfo] = useState<LicenseInfo>({
     uid: "",
     license: "",
   })
+  const [uid, licenseExpiry] = useWatch({
+    control,
+    name: ["uid", "licenseExpiry"],
+  })
+  const navigateToGenerateLicenseRecord = useCallback(() => {
+    if (!licenseInfo.license) return
+    router.push({
+      pathname: "/generateLicenseRecord",
+      query: {
+        uid: uid,
+        licenseExpiry: dateFormat(
+          calculateLicenseExpiryDate(licenseExpiry),
+          "dd/mm/yyyy"
+        ),
+        licenseString: licenseInfo.license,
+      },
+    })
+  }, [licenseExpiry, licenseInfo.license, router, uid])
 
   const generateLicense = useCallback<
     SubmitHandler<License.GenerateLicense.GenerateLicense>
@@ -53,7 +77,10 @@ export const LicenseGenerator: React.FC = () => {
       FetchLicense
     >(url, "POST", {
       uid: uid,
-      licenseExpiryDate: convertLicenseExpiry(licenseExpiry),
+      licenseExpiryDate: dateFormat(
+        calculateLicenseExpiryDate(licenseExpiry),
+        "yyyy-mm-dd"
+      ),
       licenseType: licenseType.toString(),
       componentType: convertComponentType(componentType),
     })
@@ -93,6 +120,16 @@ export const LicenseGenerator: React.FC = () => {
         </Button>
         <Button
           fullWidth
+          color="success"
+          variant="contained"
+          size="large"
+          disabled={!licenseInfo.license}
+          onClick={navigateToGenerateLicenseRecord}
+        >
+          Update Record
+        </Button>
+        <Button
+          fullWidth
           color="error"
           variant="contained"
           size="large"
@@ -101,10 +138,9 @@ export const LicenseGenerator: React.FC = () => {
           Reset
         </Button>
       </Box>
-      <LicenseStringDialog
+      <LicenseDialog
         open={dialogOpen}
-        uid={licenseInfo.uid}
-        licenseString={licenseInfo.license}
+        displayContent={licenseInfo}
         handleDialogClose={handleDialogClose}
       />
     </GeneratorWrapper>
