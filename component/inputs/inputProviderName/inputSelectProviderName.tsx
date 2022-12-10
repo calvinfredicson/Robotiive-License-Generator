@@ -4,14 +4,16 @@ import { Controller } from "react-hook-form"
 import { Language } from "."
 
 export interface InputSelectProviderNameProps extends ReactHookForm.Controller {
-  providerList: License.API.Company[]
+  providerList: License.API.Company[] | any[] // TODO: fix type
   language: Language
+  label: string
 }
 
 export const InputSelectProviderName: React.FC<
   InputSelectProviderNameProps
-> = ({ providerList, language, ...props }) => {
+> = ({ providerList, language, label, ...props }) => {
   const nameByLanguage = useMemo(() => {
+    // TODO fix type
     if (language === Language.CH) {
       return "Company Chinese Name"
     } else {
@@ -22,12 +24,9 @@ export const InputSelectProviderName: React.FC<
   return (
     <Controller
       render={({ field }) => (
-        <TextField {...field} required label={nameByLanguage} fullWidth select>
-          {providerList.map((provider) => (
-            <MenuItem
-              key={provider[nameByLanguage]}
-              value={provider["Company Chinese Name"]}
-            >
+        <TextField {...field} required label={label} fullWidth select>
+          {providerList.map((provider, index) => (
+            <MenuItem key={index} value={provider["Company Chinese Name"]}>
               {provider[nameByLanguage]}
             </MenuItem>
           ))}

@@ -1,14 +1,13 @@
 import { GeneratorWrapper } from "./generatorWrapper"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { InputOwnerName, InputText } from "component/inputs"
+import { InputOwnerName, InputProviderName, InputText } from "component/inputs"
 import { Box, Button } from "@mui/material"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { OperationType } from "types"
 import { InputCompany, InputRecordType } from "component/inputs"
 import { PartnerRecordTypeMap, RecordTypeMap } from "stringTemplates"
-import { useRouter } from "next/router"
-import { InputProviderName } from "component/inputs/inputProviderName"
 import { fetchJson } from "Utils"
+import { useRouter } from "next/router"
 
 interface LicenseGenerator extends License.GenerateLicense.GenerateLicense {
   name: string
@@ -19,18 +18,19 @@ interface LicenseGenerator extends License.GenerateLicense.GenerateLicense {
   licenseString: string
   robotiiveVersion: string
   providerName: string
+  expiryDate: string
 }
 
 interface PassedLicenseGeneratedData {
   uid: string
+  expiryDate: string
   licenseString: string
-  licenseExpiry: string
 }
 
 export const RecordGenerator: React.FC = () => {
-  const router = useRouter()
   const [companyList, setCompanyList] = useState<License.API.Company[]>([])
-
+  const router = useRouter()
+  const passedData = router.query as unknown as PassedLicenseGeneratedData
   useEffect(() => {
     const fetchRecordedCompany = async () => {
       const url = "/api/getRecordedCompanyList"
@@ -48,15 +48,12 @@ export const RecordGenerator: React.FC = () => {
     }
   }, [])
 
-  const { uid, licenseString, licenseExpiry } =
-    router.query as unknown as PassedLicenseGeneratedData
-
-  console.log({ uid, licenseString, licenseExpiry })
   const { control, handleSubmit } = useForm<LicenseGenerator>({
     defaultValues: {
       name: "",
-      uid: uid ?? "",
-      licenseString: licenseString ?? "",
+      uid: passedData.uid ?? "",
+      licenseString: passedData.licenseString ?? "",
+      expiryDate: passedData.expiryDate ?? "",
       ownerName: "",
       companyName: "",
       recordType: RecordTypeMap.CUSTOMER,
@@ -74,9 +71,34 @@ export const RecordGenerator: React.FC = () => {
 
   const generateLicenseWithRecord = useCallback<
     SubmitHandler<LicenseGenerator>
-  >(({ name, uid, companyName, recordType, partnerRecordType }) => {
-    console.log({ name, uid, companyName, recordType, partnerRecordType })
-  }, [])
+  >(
+    ({
+      name,
+      uid,
+      ownerName,
+      robotiiveVersion,
+      providerName,
+      companyName,
+      recordType,
+      partnerRecordType,
+      licenseString,
+      expiryDate,
+    }) => {
+      console.log({
+        name,
+        uid,
+        ownerName,
+        companyName,
+        recordType,
+        partnerRecordType,
+        robotiiveVersion,
+        providerName,
+        licenseString,
+        expiryDate,
+      })
+    },
+    []
+  )
 
   const AppTitle = useMemo(() => {
     if (functionType === OperationType.CREATE) return "Create Company"
@@ -107,6 +129,7 @@ export const RecordGenerator: React.FC = () => {
       </Box>
       <InputText name="name" control={control} />
       <InputText name="uid" control={control} />
+      <InputText name="expiryDate" control={control} />
       <InputText name="licenseString" control={control} />
       <InputText name="robotiiveVersion" control={control} />
       <InputOwnerName control={control} />

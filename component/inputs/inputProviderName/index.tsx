@@ -22,18 +22,22 @@ export const InputProviderName: React.FC<InputProviderNameProps> = ({
         "Company English Name": "IsCoolLab",
       },
     ],
-    []
+    [companyList]
   )
+
+  console.log(providerList)
   return (
     <>
       <InputSelectProviderName
         language={Language.CH}
         providerList={providerList}
+        label="Select Chinese Provider"
         {...props}
       />
       <InputSelectProviderName
         language={Language.EN}
         providerList={providerList}
+        label="Select English Provider"
         {...props}
       />
     </>

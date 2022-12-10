@@ -19,11 +19,8 @@ export const SelectChineseCompanyName: React.FC<
           fullWidth
           select
         >
-          {companyList.map((company) => (
-            <MenuItem
-              key={company["Company Chinese Name"]}
-              value={company["Company Chinese Name"]}
-            >
+          {companyList.map((company, index) => (
+            <MenuItem key={index} value={company["Company Chinese Name"]}>
               {company["Company Chinese Name"]}
             </MenuItem>
           ))}
