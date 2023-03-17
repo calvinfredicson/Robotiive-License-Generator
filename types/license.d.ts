@@ -5,9 +5,4 @@ declare namespace License.GenerateLicense {
     licenseType: number
     componentType: string[]
   }
-
-  interface RecordedCompanyList {
-    "Company Name": string
-    Type: string
-  }
 }

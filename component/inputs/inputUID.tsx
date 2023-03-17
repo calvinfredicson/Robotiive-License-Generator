@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material"
 import { Controller } from "react-hook-form"
 
-interface InputUIDProps extends ReactHookForm.Controller {}
+interface InputUIDProps extends ReactHookForm.Controller { }
 
 export const InputUID: React.FC<InputUIDProps> = ({ ...props }) => {
   return (

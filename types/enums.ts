@@ -20,17 +20,4 @@ export const enum User {
   DEAL = 2,
 }
 
-export enum OperationType {
-  CREATE = "create",
-  UPDATE = "update",
-}
 
-export enum PartnerRecordType {
-  PERSONAL = "PERSONAL",
-  CUSTOMER = "CUSTOMER",
-}
-
-export enum RecordType {
-  CUSTOMER = "CUSTOMER",
-  PARTNER = "PARTNER",
-}

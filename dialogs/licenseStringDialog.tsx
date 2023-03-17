@@ -9,7 +9,6 @@ import {
   styled,
   Typography,
 } from "@mui/material"
-import type { LicenseInfo } from "component"
 import { useCallback, useState } from "react"
 import { delay } from "Utils"
 
@@ -24,7 +23,7 @@ const CustomDialog = styled(Dialog)(({ theme }) => ({
 
 interface LicenseDialogProps {
   open: boolean
-  displayContent: LicenseInfo
+  displayContent: string
   handleDialogClose: () => void
 }
 
@@ -34,16 +33,16 @@ enum CopyButtonText {
 }
 
 export const LicenseDialog: React.FC<LicenseDialogProps> = ({
-  displayContent: { uid, license },
+  displayContent,
   open,
   handleDialogClose,
 }) => {
   const handleCopy = useCallback(async () => {
-    await navigator.clipboard.writeText(`UID:\n${uid}\n\nLicense:\n${license}`)
+    await navigator.clipboard.writeText(displayContent)
     setCopyButtonText(CopyButtonText.COPIED)
     await delay(2000)
     setCopyButtonText(CopyButtonText.COPY)
-  }, [license, uid])
+  }, [displayContent])
 
   const [copyButtonText, setCopyButtonText] = useState(CopyButtonText.COPY)
 
@@ -51,7 +50,7 @@ export const LicenseDialog: React.FC<LicenseDialogProps> = ({
     <CustomDialog open={open}>
       <DialogTitle sx={{ m: 0, p: 2 }}>
         <Typography variant="inherit" fontWeight="bold">
-          License String
+          Query String
         </Typography>
         <IconButton
           aria-label="close"
@@ -67,7 +66,7 @@ export const LicenseDialog: React.FC<LicenseDialogProps> = ({
         </IconButton>
       </DialogTitle>
       <DialogContent dividers>
-        <Typography sx={{ wordBreak: "break-all" }}>{license}</Typography>
+        <Typography sx={{ wordBreak: "break-all" }}>{displayContent}</Typography>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleCopy}>

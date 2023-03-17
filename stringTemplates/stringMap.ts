@@ -1,9 +1,7 @@
 import {
   ComponentType,
   LicenseType,
-  PartnerRecordType,
-  RecordType,
-  User,
+  User
 } from "../types"
 
 export const LicenseTypeMap: Record<LicenseType, string> = {
@@ -37,12 +35,3 @@ export const UserTypeMap: Record<User, { type: string; expiry: number }> = {
   },
 }
 
-export const RecordTypeMap: Record<RecordType, string> = {
-  [RecordType.CUSTOMER]: "Customer",
-  [RecordType.PARTNER]: "Partner",
-}
-
-export const PartnerRecordTypeMap: Record<PartnerRecordType, string> = {
-  [PartnerRecordType.CUSTOMER]: "Customer",
-  [PartnerRecordType.PERSONAL]: "Personal",
-}

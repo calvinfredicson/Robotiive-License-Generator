@@ -5,7 +5,7 @@ import { Controller, ControllerRenderProps } from "react-hook-form"
 import { ComponentTypeMap } from "stringTemplates"
 import { ComponentType } from "types"
 
-interface ComponentTypeProps extends ReactHookForm.Controller {}
+interface ComponentTypeProps extends ReactHookForm.Controller { }
 
 export const InputComponentType = forwardRef<any, ComponentTypeProps>(
   function ComponentTypeInput({ control }, ref) {
