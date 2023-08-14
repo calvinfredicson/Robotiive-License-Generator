@@ -11,6 +11,7 @@ import {
 } from "@mui/material"
 import { useCallback, useState } from "react"
 import { delay } from "Utils"
+import { useModal } from "customHook"
 
 const CustomDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -21,10 +22,8 @@ const CustomDialog = styled(Dialog)(({ theme }) => ({
   },
 }))
 
-interface LicenseDialogProps {
-  open: boolean
+interface LicenseDialogProps extends Omit<ReturnType<typeof useModal>, "handleOpen"> {
   displayContent: string
-  handleDialogClose: () => void
 }
 
 enum CopyButtonText {
@@ -32,10 +31,10 @@ enum CopyButtonText {
   COPY = "Copy Info",
 }
 
-export const LicenseDialog: React.FC<LicenseDialogProps> = ({
+export const LicenseStringDialog: React.FC<LicenseDialogProps> = ({
   displayContent,
   open,
-  handleDialogClose,
+  handleClose,
 }) => {
   const handleCopy = useCallback(async () => {
     await navigator.clipboard.writeText(displayContent)
@@ -54,7 +53,7 @@ export const LicenseDialog: React.FC<LicenseDialogProps> = ({
         </Typography>
         <IconButton
           aria-label="close"
-          onClick={handleDialogClose}
+          onClick={handleClose}
           sx={{
             position: "absolute",
             right: 8,

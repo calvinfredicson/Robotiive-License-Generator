@@ -1,7 +1,7 @@
 import Head from "next/head"
 import { createTheme, ThemeProvider } from "@mui/material"
 import { NextPage } from "next"
-import { LicenseGenerator } from "component"
+import { FeatureSelector } from "component"
 
 const GenerateLicense: NextPage = () => {
   const theme = createTheme()
@@ -10,7 +10,7 @@ const GenerateLicense: NextPage = () => {
       <Head>
         <title>Generate License</title>
       </Head>
-      <LicenseGenerator />
+      <FeatureSelector />
     </ThemeProvider>
   )
 }

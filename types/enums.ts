@@ -16,4 +16,7 @@ export const enum ProductType {
   PROFESSIONAL = 4
 }
 
-
+export const enum Features {
+  GENERATE_LICENSE = "GENERATE_LICENSE",
+  SEND_EMAIL= "SEND_EMAIL"
+}

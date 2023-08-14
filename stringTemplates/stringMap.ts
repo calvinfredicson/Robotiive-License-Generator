@@ -1,4 +1,5 @@
 import {
+  Features,
   LicenseType,
   ProductType,
   User
@@ -43,4 +44,13 @@ export const ProductTypeMap: Record<ProductType, {productTypeName: string, produ
   }
 }
 
-
+export const FeatureList:Record<Features, {featureName: string, route: string}> = {
+  [Features.GENERATE_LICENSE]: {
+    featureName: "Generate RPA License",
+    route: "/generateLicense"
+  },
+  [Features.SEND_EMAIL]: {
+    featureName: "Send License Email",
+    route: "/sendEmail"
+  }
+}

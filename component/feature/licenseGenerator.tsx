@@ -9,11 +9,12 @@ import { useCallback, useState } from "react"
 import {  SubmitHandler, useForm } from "react-hook-form"
 import {  UserTypeMap } from "stringTemplates"
 import { LicenseType, ProductType, User } from "types"
-import { LicenseDialog } from "dialogs"
+import { LicenseStringDialog } from "dialogs"
 import { VpnKeyOutlined } from "@material-ui/icons"
 import dateFormat from "dateformat"
 import { InputLicenseExpiry, InputLicenseType, InputProductType, InputUID } from "component"
 import { calculateLicenseExpiryDate } from "Utils"
+import { useModal } from "customHook"
 
 const LicenseGenerator: React.FC = () => {
   const { control, handleSubmit, reset } =
@@ -25,17 +26,17 @@ const LicenseGenerator: React.FC = () => {
         productType: ProductType.PROFESSIONAL
       },
     })
-  const [dialogOpen, setDialogOpen] = useState(false)
+  const {handleOpen, handleClose, ...modal} = useModal()
   const handleReset = useCallback(() => reset(), [reset])
   const handleDialogClose = useCallback(() => {
-    setDialogOpen(false)
+    handleClose()
     handleReset()
   }, [handleReset])
   const [queryString, setQueryString] = useState("")
   const generateQueryString = useCallback<
     SubmitHandler<License.GenerateLicense.GenerateLicense>
   >(({ uid, licenseExpiry, licenseType, productType }) => {
-    setDialogOpen(true)
+    handleOpen()
     const licenseExpiryDate = dateFormat(
       calculateLicenseExpiryDate(licenseExpiry),
       "yyyy/mm/dd"
@@ -43,6 +44,7 @@ const LicenseGenerator: React.FC = () => {
     const url = `/cicd run license_generate -expiredDate ${licenseExpiryDate} -licenseType ${licenseType} -productType ${productType} -uid ${uid}`
     setQueryString(url)
   }, [])
+
 
   return (
     <Container
@@ -83,10 +85,10 @@ const LicenseGenerator: React.FC = () => {
               Generate
             </Button>
           </Box>
-          <LicenseDialog
-            open={dialogOpen}
+          <LicenseStringDialog
+            handleClose={handleDialogClose}
             displayContent={queryString}
-            handleDialogClose={handleDialogClose}
+            {...modal}
           />
         </Box>
       </Box>
