@@ -3,19 +3,17 @@ import {
   Box,
   Button,
   Container,
-  MenuItem,
-  TextField,
   Typography,
 } from "@mui/material"
 import { useCallback, useState } from "react"
-import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { LicenseTypeMap, UserTypeMap } from "stringTemplates"
-import { LicenseType, User } from "types"
+import {  SubmitHandler, useForm } from "react-hook-form"
+import {  UserTypeMap } from "stringTemplates"
+import { LicenseType, ProductType, User } from "types"
 import { LicenseDialog } from "dialogs"
 import { VpnKeyOutlined } from "@material-ui/icons"
 import dateFormat from "dateformat"
-import { InputLicenseExpiry, InputUID } from "component"
-import { calculateLicenseExpiryDate, convertComponentType } from "Utils"
+import { InputLicenseExpiry, InputLicenseType, InputProductType, InputUID } from "component"
+import { calculateLicenseExpiryDate } from "Utils"
 
 const LicenseGenerator: React.FC = () => {
   const { control, handleSubmit, reset } =
@@ -23,8 +21,8 @@ const LicenseGenerator: React.FC = () => {
       defaultValues: {
         uid: "",
         licenseExpiry: UserTypeMap[User.PARTNER].expiry,
-        componentType: [],
         licenseType: LicenseType.SINGLE,
+        productType: ProductType.PROFESSIONAL
       },
     })
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -36,19 +34,13 @@ const LicenseGenerator: React.FC = () => {
   const [queryString, setQueryString] = useState("")
   const generateQueryString = useCallback<
     SubmitHandler<License.GenerateLicense.GenerateLicense>
-  >(async ({ uid, licenseExpiry, licenseType, componentType }) => {
-    if (!componentType.length) {
-      window.alert("Please choose component Type")
-      return
-    }
+  >(({ uid, licenseExpiry, licenseType, productType }) => {
     setDialogOpen(true)
     const licenseExpiryDate = dateFormat(
       calculateLicenseExpiryDate(licenseExpiry),
       "yyyy/mm/dd"
     )
-    const url = `/cicd run license_generate -uid ${uid} -expiredDate ${licenseExpiryDate} -licenseType ${licenseType} -componentType ${convertComponentType(
-      componentType
-    )}`
+    const url = `/cicd run license_generate -expiredDate ${licenseExpiryDate} -licenseType ${licenseType} -productType ${productType} -uid ${uid}`
     setQueryString(url)
   }, [])
 
@@ -83,20 +75,9 @@ const LicenseGenerator: React.FC = () => {
             </Typography>
           </Box>
           <InputUID control={control} />
+          <InputProductType control={control}/>
           <InputLicenseExpiry control={control} />
-          <Controller
-            render={({ field }) => (
-              <TextField {...field} label="License Type" fullWidth select>
-                {Object.entries(LicenseTypeMap).map(([licenseType, value]) => (
-                  <MenuItem key={licenseType} value={licenseType}>
-                    {value}
-                  </MenuItem>
-                ))}
-              </TextField>
-            )}
-            name="licenseType"
-            control={control}
-          />
+          <InputLicenseType control={control} />
           <Box display="flex" flexDirection="column" gap={1}>
             <Button type="submit" fullWidth variant="contained" size="large">
               Generate

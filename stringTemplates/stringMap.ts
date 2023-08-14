@@ -1,6 +1,6 @@
 import {
-  ComponentType,
   LicenseType,
+  ProductType,
   User
 } from "../types"
 
@@ -24,5 +24,23 @@ export const UserTypeMap: Record<User, { type: string, expiry: number }> = {
   },
 }
 
+export const ProductTypeMap: Record<ProductType, {productTypeName: string, productTypeCode: number}> = {
+  [ProductType.EXECUTOR]: {
+    productTypeName: "Executor",
+    productTypeCode: ProductType.EXECUTOR
+  },
+  [ProductType.BASIC]: {
+    productTypeName: "Basic",
+    productTypeCode: ProductType.BASIC
+  },
+  [ProductType.PREMIUM]: {
+    productTypeName: "Premium",
+    productTypeCode: ProductType.PREMIUM
+  },
+  [ProductType.PROFESSIONAL]: {
+    productTypeName: "Professional",
+    productTypeCode: ProductType.PROFESSIONAL
+  }
+}
 
 
