@@ -9,18 +9,7 @@ export const LicenseTypeMap: Record<LicenseType, string> = {
   [LicenseType.VOLUME]: "Volume",
 }
 
-export const ComponentTypeMap: Record<ComponentType, string> = {
-  [ComponentType.RCM]: "RCM",
-  [ComponentType.SIDEEX]: "Sideex",
-  [ComponentType.PLC]: "PLC",
-  [ComponentType.RUNNER]: "Runner",
-  [ComponentType.LOGVIEWER]: "Log Viewer",
-  [ComponentType.RUNNER_SCHEDULER]: "Runner Scheduler",
-  [ComponentType.OPEN_API]: "Open API",
-  [ComponentType.ALL]: "All",
-}
-
-export const UserTypeMap: Record<User, { type: string; expiry: number }> = {
+export const UserTypeMap: Record<User, { type: string, expiry: number }> = {
   [User.CUSTOMER]: {
     type: "Customer",
     expiry: 1,
@@ -34,4 +23,6 @@ export const UserTypeMap: Record<User, { type: string; expiry: number }> = {
     expiry: 12,
   },
 }
+
+
 
