@@ -4,7 +4,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { from, to, subject, emailContent } =
       req.body as License.API.SendEmailBody;
-    console.log(process.env["GMAIL_PASSWORD"]);
     const send = require("gmail-send")({
       user: from,
       pass: process.env["GMAIL_PASSWORD"],
@@ -22,7 +21,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       }
     );
   } catch (err) {
-    console.log(process.env["GMAIL_PASSWORD"]);
     return res.status(500).json({ error: err });
   }
 }

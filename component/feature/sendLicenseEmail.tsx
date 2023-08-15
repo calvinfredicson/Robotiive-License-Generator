@@ -34,7 +34,6 @@ const SendLicenseEmail: React.FC<SendLicenseEmailProps> = ({ uid }) => {
   const sendEmail = useCallback<
     SubmitHandler<License.GenerateLicense.SendEmail>
   >(async ({ uid, from, to, subject, licenseString }) => {
-    console.log({ from, to, subject, licenseString });
     try {
       const url = "/api/sendEmail";
       const reqBody: License.API.SendEmailBody = {

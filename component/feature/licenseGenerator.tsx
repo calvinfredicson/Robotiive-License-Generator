@@ -46,7 +46,6 @@ const LicenseGenerator: React.FC = () => {
   const navigateToSendEmailPage = useCallback(() => {
     // get current uid and send it to the send email page
     const uid = watch("uid");
-    console.log(uid);
     if (!uid) return;
     router.push({
       pathname: "/sendEmail",
