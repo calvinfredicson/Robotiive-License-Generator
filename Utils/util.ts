@@ -51,8 +51,10 @@ export function generateEmailContent(
   Hi ${removeAfterCharacter(to, "@")},
   
   Here is your license information:
-  UID: ${uid}
-  RPA License: ${licenseString}
+  UID: 
+    ${uid}
+  RPA License: 
+    ${licenseString}
 
   Thank you for choosing Robotiive. 
 

@@ -6,11 +6,15 @@ import { useSnackbar } from "customHook";
 import { useCallback } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-const SendLicenseEmail = () => {
+interface SendLicenseEmailProps {
+  uid?: string;
+}
+
+const SendLicenseEmail: React.FC<SendLicenseEmailProps> = ({ uid }) => {
   const { control, handleSubmit, reset } =
     useForm<License.GenerateLicense.SendEmail>({
       defaultValues: {
-        uid: "randomUID",
+        uid: uid || "",
         from: "calvin.fredicson@gmail.com",
         to: "",
         subject: "RPA License Information",

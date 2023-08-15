@@ -1,3 +1,4 @@
 import LicenseStringDialog from "./licenseStringDialog";
+import SendLicenseConfirmationDialog from "./sendLicenseConfirmationDialog";
 
-export { LicenseStringDialog };
+export { LicenseStringDialog, SendLicenseConfirmationDialog };

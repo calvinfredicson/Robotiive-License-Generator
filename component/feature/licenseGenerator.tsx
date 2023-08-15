@@ -14,9 +14,10 @@ import {
 import { calculateLicenseExpiryDate } from "Utils";
 import { useModal } from "customHook";
 import { LicenseStringDialog } from "component/dialogs";
+import { useRouter } from "next/router";
 
 const LicenseGenerator: React.FC = () => {
-  const { control, handleSubmit, reset } =
+  const { control, handleSubmit, reset, watch } =
     useForm<License.GenerateLicense.GenerateLicense>({
       defaultValues: {
         uid: "",
@@ -26,11 +27,9 @@ const LicenseGenerator: React.FC = () => {
       },
     });
   const { handleOpen, handleClose, ...modal } = useModal();
-  const handleReset = useCallback(() => reset(), [reset]);
   const handleDialogClose = useCallback(() => {
     handleClose();
-    handleReset();
-  }, [handleReset]);
+  }, []);
   const [queryString, setQueryString] = useState("");
   const generateQueryString = useCallback<
     SubmitHandler<License.GenerateLicense.GenerateLicense>
@@ -42,6 +41,23 @@ const LicenseGenerator: React.FC = () => {
     );
     const url = `/cicd run license_generate -expiredDate ${licenseExpiryDate} -licenseType ${licenseType} -productType ${productType} -uid ${uid}`;
     setQueryString(url);
+  }, []);
+  const router = useRouter();
+  const navigateToSendEmailPage = useCallback(() => {
+    // get current uid and send it to the send email page
+    const uid = watch("uid");
+    console.log(uid);
+    if (!uid) return;
+    router.push({
+      pathname: "/sendEmail",
+      query: { uid },
+    });
+  }, []);
+  const handleSendEmail = useCallback(() => {
+    navigateToSendEmailPage();
+  }, []);
+  const handleReset = useCallback(() => {
+    reset();
   }, []);
 
   return (
@@ -80,7 +96,25 @@ const LicenseGenerator: React.FC = () => {
           <InputLicenseType control={control} />
           <Box display="flex" flexDirection="column" gap={1}>
             <Button type="submit" fullWidth variant="contained" size="large">
-              Generate
+              Generate Query String
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              color="success"
+              size="large"
+              onClick={handleSendEmail}
+            >
+              Send Email
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              color="error"
+              size="large"
+              onClick={handleReset}
+            >
+              Reset
             </Button>
           </Box>
           <LicenseStringDialog
