@@ -1,7 +1,5 @@
-import LicenseGenerator from "./licenseGenerator"
-import FeatureSelector from "./featureSelector"
+import LicenseGenerator from "./licenseGenerator";
+import FeatureSelector from "./featureSelector";
+import SendLicenseEmail from "./sendLicenseEmail";
 
-export {
-  LicenseGenerator,
-  FeatureSelector
-}
+export { LicenseGenerator, FeatureSelector, SendLicenseEmail };

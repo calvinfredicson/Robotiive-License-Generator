@@ -1,20 +1,19 @@
+import { Avatar, Box, Button, Container, Typography } from "@mui/material";
+import { useCallback, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { UserTypeMap } from "stringTemplates";
+import { LicenseType, ProductType, User } from "types";
+import { VpnKeyOutlined } from "@material-ui/icons";
+import dateFormat from "dateformat";
 import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  Typography,
-} from "@mui/material"
-import { useCallback, useState } from "react"
-import {  SubmitHandler, useForm } from "react-hook-form"
-import {  UserTypeMap } from "stringTemplates"
-import { LicenseType, ProductType, User } from "types"
-import { LicenseStringDialog } from "dialogs"
-import { VpnKeyOutlined } from "@material-ui/icons"
-import dateFormat from "dateformat"
-import { InputLicenseExpiry, InputLicenseType, InputProductType, InputUID } from "component"
-import { calculateLicenseExpiryDate } from "Utils"
-import { useModal } from "customHook"
+  InputLicenseExpiry,
+  InputLicenseType,
+  InputProductType,
+  CustomTextInput,
+} from "component";
+import { calculateLicenseExpiryDate } from "Utils";
+import { useModal } from "customHook";
+import { LicenseStringDialog } from "component/dialogs";
 
 const LicenseGenerator: React.FC = () => {
   const { control, handleSubmit, reset } =
@@ -23,28 +22,27 @@ const LicenseGenerator: React.FC = () => {
         uid: "",
         licenseExpiry: UserTypeMap[User.PARTNER].expiry,
         licenseType: LicenseType.SINGLE,
-        productType: ProductType.PROFESSIONAL
+        productType: ProductType.PROFESSIONAL,
       },
-    })
-  const {handleOpen, handleClose, ...modal} = useModal()
-  const handleReset = useCallback(() => reset(), [reset])
+    });
+  const { handleOpen, handleClose, ...modal } = useModal();
+  const handleReset = useCallback(() => reset(), [reset]);
   const handleDialogClose = useCallback(() => {
-    handleClose()
-    handleReset()
-  }, [handleReset])
-  const [queryString, setQueryString] = useState("")
+    handleClose();
+    handleReset();
+  }, [handleReset]);
+  const [queryString, setQueryString] = useState("");
   const generateQueryString = useCallback<
     SubmitHandler<License.GenerateLicense.GenerateLicense>
   >(({ uid, licenseExpiry, licenseType, productType }) => {
-    handleOpen()
+    handleOpen();
     const licenseExpiryDate = dateFormat(
       calculateLicenseExpiryDate(licenseExpiry),
       "yyyy/mm/dd"
-    )
-    const url = `/cicd run license_generate -expiredDate ${licenseExpiryDate} -licenseType ${licenseType} -productType ${productType} -uid ${uid}`
-    setQueryString(url)
-  }, [])
-
+    );
+    const url = `/cicd run license_generate -expiredDate ${licenseExpiryDate} -licenseType ${licenseType} -productType ${productType} -uid ${uid}`;
+    setQueryString(url);
+  }, []);
 
   return (
     <Container
@@ -76,8 +74,8 @@ const LicenseGenerator: React.FC = () => {
               License Generator
             </Typography>
           </Box>
-          <InputUID control={control} />
-          <InputProductType control={control}/>
+          <CustomTextInput label="UID" name="uid" control={control} />
+          <InputProductType control={control} />
           <InputLicenseExpiry control={control} />
           <InputLicenseType control={control} />
           <Box display="flex" flexDirection="column" gap={1}>
@@ -93,7 +91,7 @@ const LicenseGenerator: React.FC = () => {
         </Box>
       </Box>
     </Container>
-  )
-}
+  );
+};
 
-export default LicenseGenerator
+export default LicenseGenerator;

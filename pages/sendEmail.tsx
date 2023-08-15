@@ -1,7 +1,7 @@
-const sendEmail = () => {
-  return (
-    <div>sendEmail</div>
-  )
-}
+import { SendLicenseEmail } from "component";
 
-export default sendEmail
+const sendEmail = () => {
+  return <SendLicenseEmail />;
+};
+
+export default sendEmail;
