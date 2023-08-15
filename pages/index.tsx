@@ -1,10 +1,10 @@
-import Head from "next/head"
-import { createTheme, ThemeProvider } from "@mui/material"
-import { NextPage } from "next"
-import { FeatureSelector } from "component"
+import Head from "next/head";
+import { createTheme, ThemeProvider } from "@mui/material";
+import { NextPage } from "next";
+import { FeatureSelector } from "component";
 
 const GenerateLicense: NextPage = () => {
-  const theme = createTheme()
+  const theme = createTheme();
   return (
     <ThemeProvider theme={theme}>
       <Head>
@@ -12,7 +12,7 @@ const GenerateLicense: NextPage = () => {
       </Head>
       <FeatureSelector />
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default GenerateLicense
+export default GenerateLicense;

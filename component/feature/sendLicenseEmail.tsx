@@ -73,7 +73,12 @@ const SendLicenseEmail: React.FC<SendLicenseEmailProps> = ({ uid }) => {
             Send License Through Email
           </Typography>
           <CustomTextInput control={control} label="UID" name="uid" />
-          <CustomTextInput control={control} label="From" name="from" />
+          <CustomTextInput
+            control={control}
+            label="From"
+            name="from"
+            disabled={true}
+          />
           <CustomTextInput control={control} label="To" name="to" />
           <CustomTextInput control={control} label="Subject" name="subject" />
           <CustomTextInput
