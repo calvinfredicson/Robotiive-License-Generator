@@ -1,4 +1,3 @@
-import { Close } from "@material-ui/icons";
 import {
   Button,
   Dialog,
@@ -8,10 +7,11 @@ import {
   IconButton,
   styled,
   Typography,
-} from "@mui/material";
-import { useCallback, useState } from "react";
-import { delay } from "Utils";
-import { useModal } from "customHook";
+} from "@mui/material"
+import { useCallback, useState } from "react"
+import { delay } from "Utils"
+import { useModal } from "customHook"
+import { Close } from "@mui/icons-material"
 
 const CustomDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -20,11 +20,11 @@ const CustomDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
   },
-}));
+}))
 
 interface LicenseDialogProps
   extends Omit<ReturnType<typeof useModal>, "handleOpen"> {
-  displayContent: string;
+  displayContent: string
 }
 
 enum CopyButtonText {
@@ -38,13 +38,13 @@ const LicenseStringDialog: React.FC<LicenseDialogProps> = ({
   handleClose,
 }) => {
   const handleCopy = useCallback(async () => {
-    await navigator.clipboard.writeText(displayContent);
-    setCopyButtonText(CopyButtonText.COPIED);
-    await delay(2000);
-    setCopyButtonText(CopyButtonText.COPY);
-  }, [displayContent]);
+    await navigator.clipboard.writeText(displayContent)
+    setCopyButtonText(CopyButtonText.COPIED)
+    await delay(2000)
+    setCopyButtonText(CopyButtonText.COPY)
+  }, [displayContent])
 
-  const [copyButtonText, setCopyButtonText] = useState(CopyButtonText.COPY);
+  const [copyButtonText, setCopyButtonText] = useState(CopyButtonText.COPY)
 
   return (
     <CustomDialog open={open}>
@@ -76,7 +76,7 @@ const LicenseStringDialog: React.FC<LicenseDialogProps> = ({
         </Button>
       </DialogActions>
     </CustomDialog>
-  );
-};
+  )
+}
 
-export default LicenseStringDialog;
+export default LicenseStringDialog

@@ -3,7 +3,6 @@ import { useCallback, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { UserTypeMap } from "stringTemplates"
 import { LicenseType, ProductType, User } from "types"
-import { VpnKeyOutlined } from "@material-ui/icons"
 import dateFormat from "dateformat"
 import {
   InputLicenseExpiry,
@@ -17,6 +16,7 @@ import { LicenseStringDialog } from "component/dialogs"
 import { useRouter } from "next/router"
 import { endpoints } from "api"
 import { green } from "@mui/material/colors"
+import { VpnKeyOutlined } from "@mui/icons-material"
 
 const LicenseGenerator: React.FC = () => {
   const { control, handleSubmit, reset, watch } =
