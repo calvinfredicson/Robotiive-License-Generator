@@ -50,7 +50,7 @@ const LicenseStringDialog: React.FC<LicenseDialogProps> = ({
     <CustomDialog open={open}>
       <DialogTitle sx={{ m: 0, p: 2 }}>
         <Typography variant="inherit" fontWeight="bold">
-          Query String
+          License String
         </Typography>
         <IconButton
           aria-label="close"

@@ -1,20 +1,22 @@
-import { Avatar, Box, Button, Container, Typography } from "@mui/material";
-import { useCallback, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { UserTypeMap } from "stringTemplates";
-import { LicenseType, ProductType, User } from "types";
-import { VpnKeyOutlined } from "@material-ui/icons";
-import dateFormat from "dateformat";
+import { Avatar, Box, Button, CircularProgress, Container, Typography } from "@mui/material"
+import { useCallback, useState } from "react"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { UserTypeMap } from "stringTemplates"
+import { LicenseType, ProductType, User } from "types"
+import { VpnKeyOutlined } from "@material-ui/icons"
+import dateFormat from "dateformat"
 import {
   InputLicenseExpiry,
   InputLicenseType,
   InputProductType,
   CustomTextInput,
-} from "component";
-import { calculateLicenseExpiryDate } from "Utils";
-import { useModal } from "customHook";
-import { LicenseStringDialog } from "component/dialogs";
-import { useRouter } from "next/router";
+} from "component"
+import { calculateLicenseExpiryDate, customFetch, trimDoubleQuotes } from "Utils"
+import { useModal } from "customHook"
+import { LicenseStringDialog } from "component/dialogs"
+import { useRouter } from "next/router"
+import { endpoints } from "api"
+import { green } from "@mui/material/colors"
 
 const LicenseGenerator: React.FC = () => {
   const { control, handleSubmit, reset, watch } =
@@ -25,39 +27,47 @@ const LicenseGenerator: React.FC = () => {
         licenseType: LicenseType.SINGLE,
         productType: ProductType.PROFESSIONAL,
       },
-    });
-  const { handleOpen, handleClose, ...modal } = useModal();
+    })
+  const { handleOpen, handleClose, ...modal } = useModal()
   const handleDialogClose = useCallback(() => {
-    handleClose();
-  }, []);
-  const [queryString, setQueryString] = useState("");
-  const generateQueryString = useCallback<
+    handleClose()
+  }, [])
+  const [licenseString, setLicenseString] = useState("")
+  const [queryLicenseLoading, setQueryLicenseLoading] = useState(false)
+  const generateLicenseString = useCallback<
     SubmitHandler<License.GenerateLicense.GenerateLicense>
-  >(({ uid, licenseExpiry, licenseType, productType }) => {
-    handleOpen();
+  >(async ({ uid, licenseExpiry, licenseType, productType }) => {
+    setQueryLicenseLoading(true)
     const licenseExpiryDate = dateFormat(
       calculateLicenseExpiryDate(licenseExpiry),
       "yyyy/mm/dd"
-    );
-    const url = `/cicd run license_generate -expiredDate ${licenseExpiryDate} -licenseType ${licenseType} -productType ${productType} -uid ${uid}`;
-    setQueryString(url);
-  }, []);
-  const router = useRouter();
+    )
+    const generateLicenseQueryString = `/cicd run license_generate -expiredDate ${licenseExpiryDate} -licenseType ${licenseType} -productType ${productType} -uid ${uid}`
+
+    // Fetch license string
+    const licenseString = await customFetch<string>(endpoints.rpaQueryLicense, "POST", { licenseQueryString: generateLicenseQueryString })
+
+    setLicenseString(trimDoubleQuotes(licenseString))
+    setQueryLicenseLoading(false)
+    handleOpen()
+    reset()
+  }, [])
+  const router = useRouter()
   const navigateToSendEmailPage = useCallback(() => {
     // get current uid and send it to the send email page
-    const uid = watch("uid");
-    if (!uid) return;
+    const uid = watch("uid")
+    if (!uid) return
     router.push({
       pathname: "/sendEmail",
       query: { uid },
-    });
-  }, []);
+    })
+  }, [])
   const handleSendEmail = useCallback(() => {
-    navigateToSendEmailPage();
-  }, []);
+    navigateToSendEmailPage()
+  }, [])
   const handleReset = useCallback(() => {
-    reset();
-  }, []);
+    reset()
+  }, [])
 
   return (
     <Container
@@ -72,7 +82,7 @@ const LicenseGenerator: React.FC = () => {
       <Box
         component="form"
         width="100%"
-        onSubmit={handleSubmit(generateQueryString)}
+        onSubmit={handleSubmit(generateLicenseString)}
       >
         <Box display="flex" flexDirection="column" gap={3} width="100%">
           <Box
@@ -94,9 +104,26 @@ const LicenseGenerator: React.FC = () => {
           <InputLicenseExpiry control={control} />
           <InputLicenseType control={control} />
           <Box display="flex" flexDirection="column" gap={1}>
-            <Button type="submit" fullWidth variant="contained" size="large">
-              Generate Query String
-            </Button>
+            <Box sx={{ position: "relative" }}>
+              <Button type="submit" disabled={queryLicenseLoading} fullWidth variant="contained" size="large">
+                Generate Query String
+              </Button>
+              {
+                queryLicenseLoading ? (
+                  <CircularProgress
+                    size={24}
+                    sx={{
+                      color: green[500],
+                      position: "absolute",
+                      top: '50%',
+                      left: '50%',
+                      marginTop: '-12px',
+                      marginLeft: '-12px',
+                    }}
+                  />
+                ) : null
+              }
+            </Box>
             <Button
               fullWidth
               variant="contained"
@@ -118,13 +145,13 @@ const LicenseGenerator: React.FC = () => {
           </Box>
           <LicenseStringDialog
             handleClose={handleDialogClose}
-            displayContent={queryString}
+            displayContent={licenseString}
             {...modal}
           />
         </Box>
       </Box>
     </Container>
-  );
-};
+  )
+}
 
-export default LicenseGenerator;
+export default LicenseGenerator
