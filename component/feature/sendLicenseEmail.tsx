@@ -7,10 +7,11 @@ import { useCallback } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface SendLicenseEmailProps {
-  uid?: string;
+  uid?: string,
+  licenseString: string
 }
 
-const SendLicenseEmail: React.FC<SendLicenseEmailProps> = ({ uid }) => {
+const SendLicenseEmail: React.FC<SendLicenseEmailProps> = ({ uid, licenseString }) => {
   const { control, handleSubmit, reset } =
     useForm<License.GenerateLicense.SendEmail>({
       defaultValues: {
@@ -18,7 +19,7 @@ const SendLicenseEmail: React.FC<SendLicenseEmailProps> = ({ uid }) => {
         from: "calvin.fredicson@gmail.com",
         to: "",
         subject: "RPA License Information",
-        licenseString: "",
+        licenseString: licenseString || "",
       },
     });
   const {

@@ -6,8 +6,10 @@ const sendEmail = () => {
   if (!query) {
     push("/generateLicense");
   }
-  const uid = query["uid"] as unknown as string;
-  return <SendLicenseEmail uid={uid} />;
+
+  const uid = query["uid"] as string
+  const licenseString = query["licenseString"] as string
+  return <SendLicenseEmail licenseString={licenseString} uid={uid} />
 };
 
-export default sendEmail;
+export default sendEmail
