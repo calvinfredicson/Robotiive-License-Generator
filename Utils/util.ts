@@ -48,22 +48,21 @@ export function generateEmailContent(
   licenseString: string
 ) {
   const template: string = `
-  Hi ${removeAfterCharacter(to, "@")},
+Hi ${removeAfterCharacter(to, "@")},
   
-  Here is your license information:
+Here is your license information:
   
-  UID: 
-  ${uid}
+UID: 
+${uid}
   
-  RPA License: 
-  ${licenseString}
+RPA License: 
+${licenseString}
 
-  Thank you for choosing Robotiive. 
+Thank you for choosing Robotiive. 
 
-  Sincerely,
-  Robotiive Bot
-
-  `
+Sincerely,
+Robotiive Bot
+`
 
   return template
 }
