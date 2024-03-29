@@ -1,2 +1,2 @@
-export * from "./inputs";
-export * from "./feature";
+export * from "./inputs"
+export * from "./feature"

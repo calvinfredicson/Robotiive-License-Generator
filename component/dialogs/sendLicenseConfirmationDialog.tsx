@@ -5,14 +5,14 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from "@mui/material";
-import { useModal } from "customHook";
+} from "@mui/material"
+import { useModal } from "customHook"
 
 interface SendLicenseConfirmationDialogProps
   extends Omit<ReturnType<typeof useModal>, "handleOpen"> {
-  message: string;
-  handleOk?: () => void;
-  title: string;
+  message: string
+  handleOk?: () => void
+  title: string
 }
 
 const SendLicenseConfirmationDialog: React.FC<
@@ -31,7 +31,7 @@ const SendLicenseConfirmationDialog: React.FC<
         </Button>
       </DialogActions>
     </Dialog>
-  );
-};
+  )
+}
 
-export default SendLicenseConfirmationDialog;
+export default SendLicenseConfirmationDialog

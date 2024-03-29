@@ -1,10 +1,11 @@
-import { Box, Button, Container, Typography } from "@mui/material";
-import { customFetch, generateEmailContent } from "Utils";
-import { CustomTextInput } from "component";
-import { CustomAlert } from "component/alerts";
-import { useSnackbar } from "customHook";
-import { useCallback } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Box, Button, Container, Typography } from "@mui/material"
+import { customFetch, generateEmailContent } from "Utils"
+import { CustomTextInput } from "component"
+import { CustomAlert } from "component/alerts"
+import { useSnackbar } from "customHook"
+import { useRouter } from "next/navigation"
+import { useCallback } from "react"
+import { SubmitHandler, useForm } from "react-hook-form"
 
 interface SendLicenseEmailProps {
   uid?: string,
@@ -12,6 +13,7 @@ interface SendLicenseEmailProps {
 }
 
 const SendLicenseEmail: React.FC<SendLicenseEmailProps> = ({ uid, licenseString }) => {
+  const { replace } = useRouter()
   const { control, handleSubmit, reset } =
     useForm<License.GenerateLicense.SendEmail>({
       defaultValues: {
@@ -21,41 +23,38 @@ const SendLicenseEmail: React.FC<SendLicenseEmailProps> = ({ uid, licenseString 
         subject: "RPA License Information",
         licenseString: licenseString || "",
       },
-    });
+    })
   const {
     handleOpen: errorHandleOpen,
     handleClose: errorHandleClose,
     ...errorModal
-  } = useSnackbar(2000);
-  const {
-    handleOpen: successHandleOpen,
-    handleClose: successHandleClose,
-    ...successModal
-  } = useSnackbar(2000);
+  } = useSnackbar(2000)
   const sendEmail = useCallback<
     SubmitHandler<License.GenerateLicense.SendEmail>
   >(async ({ uid, from, to, subject, licenseString }) => {
     try {
-      const url = "/api/sendEmail";
+      const url = "/api/sendEmail"
       const reqBody: License.API.SendEmailBody = {
         uid,
         from,
         to,
         subject,
         emailContent: generateEmailContent(to, uid, licenseString),
-      };
-      const response = await customFetch<License.API.SendEmailBody>(
+      }
+      await customFetch<License.API.SendEmailBody>(
         url,
         "POST",
         reqBody
-      );
-      successHandleOpen();
-      reset();
-      console.log(response);
+      )
+      reset()
+      if (window.confirm("Successfully sent Email! Do you want to generate another license?") === true) {
+        replace("/generateLicense")
+      }
     } catch (err) {
-      console.log(err);
+      console.log(err)
+      errorHandleOpen()
     }
-  }, []);
+  }, [])
 
   return (
     <Container
@@ -93,17 +92,12 @@ const SendLicenseEmail: React.FC<SendLicenseEmailProps> = ({ uid, licenseString 
         </Box>
       </Box>
       <CustomAlert
-        message={"Email Sent"}
-        handleClose={successHandleClose}
-        {...successModal}
-      />
-      <CustomAlert
         message={"Error Occured!"}
         handleClose={errorHandleClose}
         {...errorModal}
       />
     </Container>
-  );
-};
+  )
+}
 
-export default SendLicenseEmail;
+export default SendLicenseEmail

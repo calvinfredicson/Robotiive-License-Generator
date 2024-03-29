@@ -1,15 +1,15 @@
-import { SendLicenseEmail } from "component";
-import { useRouter } from "next/router";
+import { SendLicenseEmail } from "component"
+import { useRouter } from "next/router"
 
 const sendEmail = () => {
-  const { push, query } = useRouter();
+  const { push, query } = useRouter()
   if (!query) {
-    push("/generateLicense");
+    push("/generateLicense")
   }
 
   const uid = query["uid"] as string
   const licenseString = query["licenseString"] as string
   return <SendLicenseEmail licenseString={licenseString} uid={uid} />
-};
+}
 
 export default sendEmail

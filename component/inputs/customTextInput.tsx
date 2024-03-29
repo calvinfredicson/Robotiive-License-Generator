@@ -1,10 +1,10 @@
-import { TextField } from "@mui/material";
-import { Controller } from "react-hook-form";
+import { TextField } from "@mui/material"
+import { Controller } from "react-hook-form"
 
 interface InputUIDProps extends ReactHookForm.Controller {
-  label: string;
-  name: string;
-  disabled?: boolean;
+  label: string
+  name: string
+  disabled?: boolean
 }
 
 const CustomTextInput: React.FC<InputUIDProps> = ({
@@ -28,7 +28,7 @@ const CustomTextInput: React.FC<InputUIDProps> = ({
       name={name}
       {...props}
     />
-  );
-};
+  )
+}
 
-export default CustomTextInput;
+export default CustomTextInput

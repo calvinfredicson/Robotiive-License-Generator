@@ -21,6 +21,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       }
     )
   } catch (err) {
+    console.log(err)
+    console.log(process.env["GMAIL_PASSWORD"])
     return res.status(500).json({ error: err })
   }
 }

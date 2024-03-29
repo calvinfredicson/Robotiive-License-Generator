@@ -25,6 +25,7 @@ const CustomDialog = styled(Dialog)(({ theme }) => ({
 interface LicenseDialogProps
   extends Omit<ReturnType<typeof useModal>, "handleOpen"> {
   displayContent: string
+  handleSendEmail: () => void
 }
 
 enum CopyButtonText {
@@ -36,6 +37,7 @@ const LicenseStringDialog: React.FC<LicenseDialogProps> = ({
   displayContent,
   open,
   handleClose,
+  handleSendEmail
 }) => {
   const handleCopy = useCallback(async () => {
     await navigator.clipboard.writeText(displayContent)
@@ -47,7 +49,7 @@ const LicenseStringDialog: React.FC<LicenseDialogProps> = ({
   const [copyButtonText, setCopyButtonText] = useState(CopyButtonText.COPY)
 
   return (
-    <CustomDialog open={open}>
+    <CustomDialog open={open} disableEscapeKeyDown>
       <DialogTitle sx={{ m: 0, p: 2 }}>
         <Typography variant="inherit" fontWeight="bold">
           License String
@@ -74,6 +76,7 @@ const LicenseStringDialog: React.FC<LicenseDialogProps> = ({
         <Button autoFocus onClick={handleCopy}>
           {copyButtonText}
         </Button>
+        <Button variant="contained" onClick={handleSendEmail}>Send Email</Button>
       </DialogActions>
     </CustomDialog>
   )

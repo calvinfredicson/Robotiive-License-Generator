@@ -1,22 +1,22 @@
-import { Container, MenuItem, TextField, Typography } from "@mui/material";
-import { useRouter } from "next/router";
-import { ChangeEvent, useCallback, useState } from "react";
-import { FeatureList } from "stringTemplates";
+import { Container, MenuItem, TextField, Typography } from "@mui/material"
+import { useRouter } from "next/router"
+import { ChangeEvent, useCallback, useState } from "react"
+import { FeatureList } from "stringTemplates"
 
 const FeatureSelector = () => {
   const [selectedFeature, setSelectedFeature] = useState(
     FeatureList.GENERATE_LICENSE.featureName
-  );
-  const router = useRouter();
+  )
+  const router = useRouter()
   const onFeatureSelect = useCallback(
     (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      setSelectedFeature(event.target.value);
+      setSelectedFeature(event.target.value)
     },
     []
-  );
+  )
   const navigateRoute = useCallback((route: string) => {
-    router.push(route);
-  }, []);
+    router.push(route)
+  }, [])
 
   return (
     <Container
@@ -52,7 +52,7 @@ const FeatureSelector = () => {
         ))}
       </TextField>
     </Container>
-  );
-};
+  )
+}
 
-export default FeatureSelector;
+export default FeatureSelector

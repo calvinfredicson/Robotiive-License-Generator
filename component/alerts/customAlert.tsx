@@ -1,10 +1,10 @@
-import { Alert, AlertColor, Snackbar } from "@mui/material";
-import { useSnackbar } from "customHook";
+import { Alert, AlertColor, Snackbar } from "@mui/material"
+import { useSnackbar } from "customHook"
 
 interface CustomAlertProps
   extends Omit<ReturnType<typeof useSnackbar>, "handleOpen"> {
-  message: string;
-  type?: AlertColor;
+  message: string
+  type?: AlertColor
 }
 
 const CustomAlert: React.FC<CustomAlertProps> = ({
@@ -20,7 +20,7 @@ const CustomAlert: React.FC<CustomAlertProps> = ({
         {message}
       </Alert>
     </Snackbar>
-  );
-};
+  )
+}
 
-export default CustomAlert;
+export default CustomAlert

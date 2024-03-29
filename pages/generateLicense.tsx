@@ -1,7 +1,7 @@
-import { LicenseGenerator } from "component";
+import { LicenseGenerator } from "component"
 
 const generateLicense = () => {
-  return <LicenseGenerator />;
-};
+  return <LicenseGenerator />
+}
 
-export default generateLicense;
+export default generateLicense

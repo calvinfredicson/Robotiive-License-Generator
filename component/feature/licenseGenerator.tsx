@@ -50,7 +50,6 @@ const LicenseGenerator: React.FC = () => {
     setLicenseString(trimDoubleQuotes(licenseString))
     setQueryLicenseLoading(false)
     handleOpen()
-    reset()
   }, [])
   const router = useRouter()
   const navigateToSendEmailPage = useCallback(() => {
@@ -61,13 +60,15 @@ const LicenseGenerator: React.FC = () => {
       pathname: "/sendEmail",
       query: { licenseString, uid }
     })
-  }, [])
+  }, [watch, licenseString, router])
+
   const handleSendEmail = useCallback(() => {
     navigateToSendEmailPage()
+  }, [licenseString])
+
+  const handleReset = useCallback(() => {
+    reset()
   }, [])
-  // const handleReset = useCallback(() => {
-  //   reset()
-  // }, [])
 
   return (
     <Container
@@ -133,7 +134,7 @@ const LicenseGenerator: React.FC = () => {
             >
               Send Email
             </Button>
-            {/* <Button
+            <Button
               fullWidth
               variant="contained"
               color="error"
@@ -141,9 +142,10 @@ const LicenseGenerator: React.FC = () => {
               onClick={handleReset}
             >
               Reset
-            </Button> */}
+            </Button>
           </Box>
           <LicenseStringDialog
+            handleSendEmail={handleSendEmail}
             handleClose={handleDialogClose}
             displayContent={licenseString}
             {...modal}
