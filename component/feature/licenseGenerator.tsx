@@ -107,7 +107,7 @@ const LicenseGenerator: React.FC = () => {
           <Box display="flex" flexDirection="column" gap={1}>
             <Box sx={{ position: "relative" }}>
               <Button type="submit" disabled={queryLicenseLoading} fullWidth variant="contained" size="large">
-                Generate Query String
+                Generate License
               </Button>
               {
                 queryLicenseLoading ? (
