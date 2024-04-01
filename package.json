@@ -15,11 +15,13 @@
     "@mui/material": "^5.15.14",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "dateformat": "^5.0.3",
+    "firebase": "^10.10.0",
     "gmail-send": "^1.8.14",
     "next": "^14.1.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-draggable": "^4.4.6",
+    "react-firebase-hooks": "^5.1.1",
     "react-hook-form": "^7.51.2",
     "styled-components": "^6.1.8"
   },

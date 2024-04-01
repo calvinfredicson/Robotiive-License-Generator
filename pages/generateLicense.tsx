@@ -1,7 +1,9 @@
 import { LicenseGenerator } from "component"
 
 const generateLicense = () => {
-  return <LicenseGenerator />
+  return (
+    <LicenseGenerator />
+  )
 }
 
 export default generateLicense
