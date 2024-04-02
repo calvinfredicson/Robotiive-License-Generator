@@ -5,22 +5,13 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  styled,
   Typography,
 } from "@mui/material"
 import { useCallback, useState } from "react"
 import { delay } from "Utils"
 import { useModal } from "customHook"
 import { Close } from "@mui/icons-material"
-
-const CustomDialog = styled(Dialog)(({ theme }) => ({
-  "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
-  },
-  "& .MuiDialogActions-root": {
-    padding: theme.spacing(1),
-  },
-}))
+import { Transition } from 'pages/auth'
 
 interface LicenseDialogProps
   extends Omit<ReturnType<typeof useModal>, "handleOpen"> {
@@ -49,7 +40,11 @@ const LicenseStringDialog: React.FC<LicenseDialogProps> = ({
   const [copyButtonText, setCopyButtonText] = useState(CopyButtonText.COPY)
 
   return (
-    <CustomDialog open={open} disableEscapeKeyDown>
+    <Dialog open={open} TransitionComponent={Transition}
+      keepMounted
+      disableEscapeKeyDown
+      PaperProps={{ sx: { borderRadius: 8, padding: "20px" } }}
+    >
       <DialogTitle sx={{ m: 0, p: 2 }}>
         <Typography variant="inherit" fontWeight="bold">
           License String
@@ -73,12 +68,12 @@ const LicenseStringDialog: React.FC<LicenseDialogProps> = ({
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={handleCopy}>
+        <Button autoFocus onClick={handleCopy} sx={{ borderRadius: 5 }}>
           {copyButtonText}
         </Button>
-        <Button variant="contained" onClick={handleSendEmail}>Send Email</Button>
+        <Button variant="contained" onClick={handleSendEmail} sx={{ borderRadius: 5 }}>Send Email</Button>
       </DialogActions>
-    </CustomDialog>
+    </Dialog>
   )
 }
 

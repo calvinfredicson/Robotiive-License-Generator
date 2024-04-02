@@ -1,0 +1,17 @@
+/* styles/globals.css */
+/* Remove padding and margin from the root */
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+#__next {
+  padding: 0;
+  margin: 0;
+}
+
+/* Optionally, remove padding and margin from specific elements */
+/* For example, remove margin from all direct children of body */
+body > * {
+  margin: 0;
+}

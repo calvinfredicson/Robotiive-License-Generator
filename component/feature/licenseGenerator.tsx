@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, CircularProgress, Container, Typography } from "@mui/material"
+import { Box, Button, CircularProgress, useMediaQuery, useTheme } from "@mui/material"
 import { useCallback, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { UserTypeMap } from "stringTemplates"
@@ -16,9 +16,12 @@ import { LicenseStringDialog } from "component/dialogs"
 import { useRouter } from "next/router"
 import { endpoints } from "api"
 import { green } from "@mui/material/colors"
-import { VpnKeyOutlined } from "@mui/icons-material"
+import Image from "next/image"
+import { motion } from "framer-motion"
 
 const LicenseGenerator: React.FC = () => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
   const { control, handleSubmit, reset, watch } =
     useForm<License.GenerateLicense.GenerateLicense>({
       defaultValues: {
@@ -71,21 +74,30 @@ const LicenseGenerator: React.FC = () => {
   }, [])
 
   return (
-    <Container
-      component="main"
-      maxWidth="xs"
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+    <Box
+      position="fixed"
+      padding={0}
+      top={0}
+      left={0}
+      minWidth="100vw"
+      minHeight="100vh"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      bgcolor="#a3c1f5"
     >
       <Box
         component="form"
+        // 430 = Iphone 14 Pro width
+        maxWidth={isMobile ? "100vw" : 430}
         width="100%"
+        height="100vh"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
         onSubmit={handleSubmit(generateLicenseString)}
       >
-        <Box display="flex" flexDirection="column" gap={3} width="100%">
+        <Box width="100%" display="flex" flexDirection="column" gap={3} sx={{ backgroundColor: "white", height: isMobile ? "100vh" : null, borderRadius: 15, padding: 5, paddingTop: isMobile ? 20 : null }}>
           <Box
             display="flex"
             flexDirection="column"
@@ -93,56 +105,82 @@ const LicenseGenerator: React.FC = () => {
             justifyContent="center"
             alignItems="center"
           >
-            <Avatar sx={{ padding: 1, margin: 1, bgcolor: "secondary.main" }}>
-              <VpnKeyOutlined fontSize="large" />
-            </Avatar>
-            <Typography variant="h4" textAlign="center">
-              License Generator
-            </Typography>
+            <motion.div
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.8, rotate: -90, borderRadius: "100%" }}
+            >
+              <Image
+                src="/BiiRobot.png"
+                alt="Bii robot"
+                // calculate size from its original dimension (526*428 Pixels)
+                width={526 / 4}
+                height={428 / 4}
+                style={{
+                  cursor: "pointer"
+                }}
+              />
+            </motion.div>
           </Box>
           <CustomTextInput label="UID" name="uid" control={control} />
           <InputProductType control={control} />
           <InputLicenseExpiry control={control} />
           <InputLicenseType control={control} />
           <Box display="flex" flexDirection="column" gap={1}>
-            <Box sx={{ position: "relative" }}>
-              <Button type="submit" disabled={queryLicenseLoading} fullWidth variant="contained" size="large">
-                Generate License
+            <motion.div
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 1.2 }}
+            >
+              <Box sx={{ position: "relative" }}>
+                <Button type="submit" disabled={queryLicenseLoading} fullWidth variant="contained" size="large" sx={{ borderRadius: "15px" }}>
+                  Generate License
+                </Button>
+                {
+                  queryLicenseLoading ? (
+                    <CircularProgress
+                      size={24}
+                      sx={{
+                        color: green[500],
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        marginTop: "-12px",
+                        marginLeft: "-12px",
+                      }}
+                    />
+                  ) : null
+                }
+              </Box>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 1.2 }}
+            >
+              <Button
+                fullWidth
+                variant="contained"
+                color="success"
+                size="large"
+                onClick={handleSendEmail}
+                sx={{ borderRadius: "15px" }}
+              >
+                Send Email
               </Button>
-              {
-                queryLicenseLoading ? (
-                  <CircularProgress
-                    size={24}
-                    sx={{
-                      color: green[500],
-                      position: "absolute",
-                      top: '50%',
-                      left: '50%',
-                      marginTop: '-12px',
-                      marginLeft: '-12px',
-                    }}
-                  />
-                ) : null
-              }
-            </Box>
-            <Button
-              fullWidth
-              variant="contained"
-              color="success"
-              size="large"
-              onClick={handleSendEmail}
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 1.2 }}
             >
-              Send Email
-            </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              color="error"
-              size="large"
-              onClick={handleReset}
-            >
-              Reset
-            </Button>
+              <Button
+                fullWidth
+                variant="contained"
+                color="error"
+                size="large"
+                sx={{ borderRadius: "15px" }}
+                onClick={handleReset}
+              >
+                Reset
+              </Button>
+            </motion.div>
           </Box>
           <LicenseStringDialog
             handleSendEmail={handleSendEmail}
@@ -152,7 +190,7 @@ const LicenseGenerator: React.FC = () => {
           />
         </Box>
       </Box>
-    </Container>
+    </Box>
   )
 }
 

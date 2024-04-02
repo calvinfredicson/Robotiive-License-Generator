@@ -1,4 +1,5 @@
 import { TextField } from "@mui/material"
+import { motion } from 'framer-motion'
 import { Controller } from "react-hook-form"
 
 interface InputUIDProps extends ReactHookForm.Controller {
@@ -16,14 +17,24 @@ const CustomTextInput: React.FC<InputUIDProps> = ({
   return (
     <Controller
       render={({ field }) => (
-        <TextField
-          disabled={disabled || false}
-          {...field}
-          required
-          fullWidth
-          label={label}
-          autoFocus
-        />
+        <motion.div
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 1.1 }}
+        >
+          <TextField
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                borderRadius: '20px',
+              },
+            }}
+            disabled={disabled || false}
+            {...field}
+            required
+            fullWidth
+            label={label}
+            autoFocus
+          />
+        </motion.div>
       )}
       name={name}
       {...props}
