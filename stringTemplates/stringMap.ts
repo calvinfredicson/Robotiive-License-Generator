@@ -10,7 +10,7 @@ export const LicenseTypeMap: Record<LicenseType, string> = {
   [LicenseType.VOLUME]: "Volume",
 }
 
-export const UserTypeMap: Record<User, { type: string, expiry: number }> = {
+export const UserTypeMap: Record<User, { type: string, expiry: number | string }> = {
   [User.CUSTOMER]: {
     type: "Customer",
     expiry: 1,
@@ -23,9 +23,13 @@ export const UserTypeMap: Record<User, { type: string, expiry: number }> = {
     type: "Deal",
     expiry: 12,
   },
+  [User.CUSTOM]: {
+    type: "Custom",
+    expiry: "Custom Expiry"
+  }
 }
 
-export const ProductTypeMap: Record<ProductType, {productTypeName: string, productTypeCode: number}> = {
+export const ProductTypeMap: Record<ProductType, { productTypeName: string, productTypeCode: number }> = {
   [ProductType.EXECUTOR]: {
     productTypeName: "Executor",
     productTypeCode: ProductType.EXECUTOR
@@ -44,7 +48,7 @@ export const ProductTypeMap: Record<ProductType, {productTypeName: string, produ
   }
 }
 
-export const FeatureList:Record<Features, {featureName: string, route: string}> = {
+export const FeatureList: Record<Features, { featureName: string, route: string }> = {
   [Features.GENERATE_LICENSE]: {
     featureName: "Generate RPA License",
     route: "/generateLicense"

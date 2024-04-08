@@ -1,11 +1,12 @@
 import { MenuItem, TextField } from "@mui/material"
 import { motion } from 'framer-motion'
-import { Controller } from "react-hook-form"
+import { Controller, useFormContext } from "react-hook-form"
 import { LicenseTypeMap } from "stringTemplates"
 
-interface InputLicenseTypeProps extends ReactHookForm.Controller { }
+interface InputLicenseTypeProps { }
 
-const InputLicenseType: React.FC<InputLicenseTypeProps> = ({ ...props }) => {
+const InputLicenseType: React.FC<InputLicenseTypeProps> = () => {
+  const rhfProps = useFormContext()
   return (
     <Controller
       render={({ field }) => (
@@ -26,7 +27,7 @@ const InputLicenseType: React.FC<InputLicenseTypeProps> = ({ ...props }) => {
         </motion.div>
       )}
       name="licenseType"
-      {...props}
+      {...rhfProps}
     />
   )
 }

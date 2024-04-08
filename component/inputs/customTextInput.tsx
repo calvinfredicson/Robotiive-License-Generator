@@ -1,8 +1,8 @@
 import { TextField } from "@mui/material"
 import { motion } from 'framer-motion'
-import { Controller } from "react-hook-form"
+import { Controller, useFormContext } from "react-hook-form"
 
-interface InputUIDProps extends ReactHookForm.Controller {
+interface InputUIDProps {
   label: string
   name: string
   disabled?: boolean
@@ -11,9 +11,9 @@ interface InputUIDProps extends ReactHookForm.Controller {
 const CustomTextInput: React.FC<InputUIDProps> = ({
   label,
   name,
-  disabled,
-  ...props
+  disabled
 }) => {
+  const rhsProps = useFormContext()
   return (
     <Controller
       render={({ field }) => (
@@ -37,7 +37,7 @@ const CustomTextInput: React.FC<InputUIDProps> = ({
         </motion.div>
       )}
       name={name}
-      {...props}
+      {...rhsProps}
     />
   )
 }

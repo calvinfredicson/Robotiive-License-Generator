@@ -1,11 +1,12 @@
 import { MenuItem, TextField } from "@mui/material"
 import { motion } from 'framer-motion'
-import { Controller } from "react-hook-form"
+import { Controller, useFormContext } from "react-hook-form"
 import { ProductTypeMap } from "stringTemplates"
 
-interface InputProductTypeProps extends ReactHookForm.Controller { }
+interface InputProductTypeProps { }
 
-const InputProductType: React.FC<InputProductTypeProps> = ({ ...props }) => {
+const InputProductType: React.FC<InputProductTypeProps> = () => {
+  const rhsProps = useFormContext()
   return (
     <Controller
       render={({ field }) => (
@@ -28,7 +29,7 @@ const InputProductType: React.FC<InputProductTypeProps> = ({ ...props }) => {
         </motion.div>
       )}
       name="productType"
-      {...props}
+      {...rhsProps}
     />
   )
 }

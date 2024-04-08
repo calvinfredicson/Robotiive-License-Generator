@@ -4,9 +4,10 @@ export const enum LicenseType {
 }
 
 export const enum User {
-  CUSTOMER = 0,
-  PARTNER = 1,
-  DEAL = 2,
+  CUSTOMER = "customer",
+  PARTNER = "partner",
+  DEAL = "deal",
+  CUSTOM = "custom"
 }
 
 export const enum ProductType {
@@ -18,5 +19,5 @@ export const enum ProductType {
 
 export const enum Features {
   GENERATE_LICENSE = "GENERATE_LICENSE",
-  SEND_EMAIL= "SEND_EMAIL"
+  SEND_EMAIL = "SEND_EMAIL"
 }
