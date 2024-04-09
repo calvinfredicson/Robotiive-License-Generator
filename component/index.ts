@@ -1,5 +1,4 @@
 export * from "./inputs"
 export * from "./feature"
-export * from "./alerts"
 export * from "./dialogs"
 export * from "./buttons"

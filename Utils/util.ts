@@ -68,5 +68,5 @@ Robotiive Bot
 }
 
 export function trimDoubleQuotes(str: string) {
-  return str.replace(/^"|"$/g, '')
+  return str.replace(/^"|"$/g, "")
 }

@@ -11,7 +11,7 @@ import { useCallback, useState } from "react"
 import { delay } from "Utils"
 import { useModal } from "customHook"
 import { Close } from "@mui/icons-material"
-import { Transition } from 'pages/auth'
+import { Transition } from "pages/auth"
 
 interface LicenseDialogProps
   extends Omit<ReturnType<typeof useModal>, "handleOpen"> {

@@ -1,12 +1,12 @@
-import dateFormat from 'dateformat'
-import ManualLicenseExpiry from './manualLicenseExpiry'
-import dayjs from 'dayjs'
-import { User } from 'types'
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
-import { useFormContext } from 'react-hook-form'
-import { UserTypeMap } from 'stringTemplates'
-import { calculateLicenseExpiryDate } from 'Utils'
-import { CustomLicenseExpiry } from './customLicenseExpiry'
+import dateFormat from "dateformat"
+import ManualLicenseExpiry from "./manualLicenseExpiry"
+import dayjs from "dayjs"
+import { User } from "types"
+import { ChangeEvent, useCallback, useEffect, useState } from "react"
+import { useFormContext } from "react-hook-form"
+import { UserTypeMap } from "stringTemplates"
+import { calculateLicenseExpiryDate } from "Utils"
+import { CustomLicenseExpiry } from "./customLicenseExpiry"
 
 const InputLicenseExpiry = () => {
   const { setValue } = useFormContext()
@@ -28,7 +28,7 @@ const InputLicenseExpiry = () => {
   }, [licenseExpiry])
 
   useEffect(() => {
-    let expiryDate = manualExpiryDate.format('YYYY/MM/DD')
+    let expiryDate = manualExpiryDate.format("YYYY/MM/DD")
     if (!manualExpiry) {
       expiryDate = formatDate(UserTypeMap[licenseExpiry].expiry) ?? ""
     }

@@ -6,7 +6,7 @@ import { useEffect } from "react"
 import { useAuthState, useSignOut } from "react-firebase-hooks/auth"
 import type { AppProps } from "next/app"
 import { ThemeProvider } from "styled-components"
-import { createTheme } from '@mui/material'
+import { createTheme } from "@mui/material"
 
 function MyApp({ Component, pageProps }: AppProps) {
   const theme = createTheme()

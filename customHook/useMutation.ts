@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from "react"
 
 const useMutation = () => {
   const [loading, setLoading] = useState(false)
@@ -9,9 +9,9 @@ const useMutation = () => {
 
     try {
       const response = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: body,
       })

@@ -4,8 +4,8 @@ import { auth } from "firebase"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { TransitionProps } from "@mui/material/transitions"
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth'
-import { green } from '@mui/material/colors'
+import { useSignInWithGoogle } from "react-firebase-hooks/auth"
+import { green } from "@mui/material/colors"
 
 interface AuthProps {
   showAuth: boolean
@@ -51,10 +51,10 @@ const Auth: React.FC<AuthProps> = ({ showAuth }) => {
                 sx={{
                   color: green[500],
                   position: "absolute",
-                  top: '50%',
-                  left: '50%',
-                  marginTop: '-12px',
-                  marginLeft: '-12px',
+                  top: "50%",
+                  left: "50%",
+                  marginTop: "-12px",
+                  marginLeft: "-12px",
                 }}
               />
             ) : null

@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion"
 import { MenuItem, TextField, useTheme } from "@mui/material"
-import { ChangeEvent } from 'react'
-import { UserTypeMap } from 'stringTemplates'
-import { User } from 'types'
+import { ChangeEvent } from "react"
+import { UserTypeMap } from "stringTemplates"
+import { User } from "types"
 
 interface CustomLicenseExpiryProps {
   licenseExpiry: User
@@ -23,8 +23,8 @@ export const CustomLicenseExpiry: React.FC<CustomLicenseExpiryProps> = ({ licens
       whileTap={{ scale: 1.1 }}
     >
       <TextField value={licenseExpiry} onChange={handleLicenseExpiryChange} required label="License Expiry" fullWidth select sx={{
-        '& .MuiOutlinedInput-root': {
-          borderRadius: '20px',
+        "& .MuiOutlinedInput-root": {
+          borderRadius: "20px",
           color: licenseExpiry === User.CUSTOM ? palette.success.light : undefined
         },
       }}>

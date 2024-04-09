@@ -16,7 +16,7 @@ import {
   LicenseStringDialog,
   SubmitButton
 } from "component"
-import useMutation from 'customHook/useMutation'
+import useMutation from "customHook/useMutation"
 
 const LicenseGenerator: React.FC = () => {
   const theme = useTheme()

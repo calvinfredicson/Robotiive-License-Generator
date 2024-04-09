@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material"
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion"
 import { Controller, useFormContext } from "react-hook-form"
 
 interface InputUIDProps {
@@ -23,8 +23,8 @@ const CustomTextInput: React.FC<InputUIDProps> = ({
         >
           <TextField
             sx={{
-              '& .MuiOutlinedInput-root': {
-                borderRadius: '20px',
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "20px",
               },
             }}
             disabled={disabled || false}

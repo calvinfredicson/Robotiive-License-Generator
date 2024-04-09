@@ -1,5 +1,5 @@
-import { Box, Button, ButtonProps, CircularProgress } from '@mui/material'
-import { green } from '@mui/material/colors'
+import { Box, Button, ButtonProps, CircularProgress } from "@mui/material"
+import { green } from "@mui/material/colors"
 
 interface SubmitButtonProps extends ButtonProps {
   loading: boolean,

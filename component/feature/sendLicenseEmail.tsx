@@ -1,13 +1,12 @@
-import Image from 'next/image'
+import Image from "next/image"
 import { Box, useMediaQuery, useTheme } from "@mui/material"
 import { generateEmailContent } from "Utils"
-import { CustomTextInput, CustomAlert, SubmitButton } from "component"
-import { useSnackbar } from "customHook"
-import { motion } from 'framer-motion'
+import { CustomTextInput, SubmitButton } from "component"
+import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect } from "react"
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
-import useMutation from 'customHook/useMutation'
+import useMutation from "customHook/useMutation"
 
 interface SendLicenseEmailProps {
   uid?: string,
@@ -29,11 +28,6 @@ const SendLicenseEmail: React.FC<SendLicenseEmailProps> = ({ uid, licenseString 
         licenseString: licenseString || "",
       },
     })
-  const {
-    handleOpen: errorHandleOpen,
-    handleClose: errorHandleClose,
-    ...errorModal
-  } = useSnackbar(2000)
   const sendEmail = useCallback<
     SubmitHandler<License.GenerateLicense.SendEmail>
   >(async ({ uid, from, to, subject, licenseString }) => {
@@ -102,7 +96,7 @@ const SendLicenseEmail: React.FC<SendLicenseEmailProps> = ({ uid, licenseString 
                   width={526 / 4}
                   height={428 / 4}
                   style={{
-                    cursor: 'pointer'
+                    cursor: "pointer"
                   }}
                 />
               </motion.div>
@@ -128,11 +122,6 @@ const SendLicenseEmail: React.FC<SendLicenseEmailProps> = ({ uid, licenseString 
             </motion.div>
           </Box>
         </Box>
-        <CustomAlert
-          message={"Error Occured!"}
-          handleClose={errorHandleClose}
-          {...errorModal}
-        />
       </Box>
     </FormProvider>
   )
