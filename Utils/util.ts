@@ -70,3 +70,10 @@ Robotiive Bot
 export function trimDoubleQuotes(str: string) {
   return str.replace(/^"|"$/g, "")
 }
+
+
+export function isValidEmail(email: string) {
+  // Regular expression to match email addresses ending with @iscoollab.com
+  var regex = /^[a-zA-Z0-9._%+-]+@iscoollab\.com$/
+  return regex.test(email)
+}
