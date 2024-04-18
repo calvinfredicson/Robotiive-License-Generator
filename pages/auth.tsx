@@ -6,6 +6,8 @@ import { useRouter } from "next/router"
 import { TransitionProps } from "@mui/material/transitions"
 import { useSignInWithGoogle } from "react-firebase-hooks/auth"
 import { green } from "@mui/material/colors"
+import CustomSnackbar from 'component/customSnackbar'
+import { useAlert } from 'customHook'
 
 interface AuthProps {
   showAuth: boolean
@@ -14,6 +16,7 @@ interface AuthProps {
 const Auth: React.FC<AuthProps> = ({ showAuth }) => {
   const { replace } = useRouter()
   const [signInWithGoogle, _, loading, error] = useSignInWithGoogle(auth)
+  const { showAlert, ...alertErrorProps } = useAlert()
 
   const handleGoogleSignIn = useCallback(async () => {
     signInWithGoogle()
@@ -21,7 +24,7 @@ const Auth: React.FC<AuthProps> = ({ showAuth }) => {
 
   useEffect(() => {
     if (!error) return
-    window.alert("You are not authorized!")
+    showAlert()
   }, [error])
 
   return (
@@ -61,6 +64,7 @@ const Auth: React.FC<AuthProps> = ({ showAuth }) => {
           }
         </Box>
       </DialogContent>
+      <CustomSnackbar text="You are not authorized!" type="error" {...alertErrorProps} />
     </Dialog>
   )
 }
