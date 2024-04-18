@@ -19,9 +19,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   const { showAlert, ...alertErrorProps } = useAlert()
 
   const userEmail = useMemo(() => user?.email ? user.email : "", [user])
-  const showAuth = useMemo(() => !(userEmail.length > 0), [userEmail])
+  const showAuth = useMemo(() => !(userEmail.length), [userEmail])
 
   useEffect(() => {
+    if (!userEmail.length) return
     const validEmail = isValidEmail(userEmail)
     if (validEmail) return
     signOut()
