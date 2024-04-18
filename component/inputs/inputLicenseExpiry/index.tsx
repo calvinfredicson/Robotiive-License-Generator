@@ -23,7 +23,7 @@ const InputLicenseExpiry = () => {
   }, [licenseExpiry])
 
   useEffect(() => {
-    if (licenseExpiry !== User.CUSTOM) return
+    if (licenseExpiry !== User.CUSTOM) return setManualExpiry(false)
     setManualExpiry(true)
   }, [licenseExpiry])
 
