@@ -53,8 +53,8 @@ export const FeatureList: Record<Features, { featureName: string, route: string 
     featureName: "Generate RPA License",
     route: "/generateLicense"
   },
-  [Features.SEND_EMAIL]: {
-    featureName: "Send License Email",
-    route: "/sendEmail"
+  [Features.SEND_LICENSE]: {
+    featureName: "Send License",
+    route: "/sendLicense"
   }
 }

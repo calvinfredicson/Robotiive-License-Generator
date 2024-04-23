@@ -6,18 +6,13 @@ declare namespace License.GenerateLicense {
     productType: number
   }
 
-  interface SendEmail {
+  interface SendLicenseMessage {
     uid: string
-    from: string
-    to: string
-    subject: string
+    lineUserId: string
     licenseString: string
   }
-}
 
-declare namespace License.API {
-  interface SendEmailBody
-    extends Omit<License.GenerateLicense.SendEmail, "licenseString"> {
+  interface SendLicenseRequestBody extends SendLicenseMessage {
     emailContent: string
   }
 }

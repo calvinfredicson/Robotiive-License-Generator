@@ -1,48 +1,44 @@
 import Image from "next/image"
 import { Box, useMediaQuery, useTheme } from "@mui/material"
-import { generateEmailContent } from "Utils"
+import { generateLicenseMessageContent } from "Utils"
 import { CustomTextInput, SubmitButton } from "component"
 import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect } from "react"
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form"
 import useMutation from "customHook/useMutation"
+import { SendLicenseRequestBody } from "pages/api/sendLicense"
 
-interface SendLicenseEmailProps {
+interface SendLicenseMessageProps {
   uid?: string,
   licenseString: string
 }
 
-const SendLicenseEmail: React.FC<SendLicenseEmailProps> = ({ uid, licenseString }) => {
+const SendLicenseMessage: React.FC<SendLicenseMessageProps> = ({ uid, licenseString }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
   const { replace } = useRouter()
-  const { mutateData: fetchSendEmail, loading, error } = useMutation()
+  const { mutateData: fetchSendLicense, loading, error } = useMutation()
   const methods =
-    useForm<License.GenerateLicense.SendEmail>({
+    useForm<License.GenerateLicense.SendLicenseMessage>({
       defaultValues: {
         uid: uid || "",
-        from: "calvin.fredicson@gmail.com",
-        to: "",
-        subject: "RPA License Information",
+        lineUserId: "",
         licenseString: licenseString || "",
       },
     })
   const sendEmail = useCallback<
-    SubmitHandler<License.GenerateLicense.SendEmail>
-  >(async ({ uid, from, to, subject, licenseString }) => {
-    const url = "/api/sendEmail"
-    const reqBody: License.API.SendEmailBody = {
-      uid,
-      from,
-      to,
-      subject,
-      emailContent: generateEmailContent(to, uid, licenseString),
+    SubmitHandler<License.GenerateLicense.SendLicenseMessage>
+  >(async ({ uid, lineUserId, licenseString }) => {
+    const url = "/api/sendLicense"
+    const reqBody: SendLicenseRequestBody = {
+      lineUserId,
+      message: generateLicenseMessageContent(uid, licenseString),
     }
-    const response = await fetchSendEmail(url, JSON.stringify(reqBody))
+    const response = await fetchSendLicense(url, JSON.stringify(reqBody))
     console.log(response?.json())
     methods.reset()
-    if (window.confirm("Successfully sent Email! Do you want to generate another license?") === true) {
+    if (window.confirm("Successfully sent! Do you want to generate another license?") === true) {
       replace("/generateLicense")
     }
   }, [])
@@ -102,22 +98,13 @@ const SendLicenseEmail: React.FC<SendLicenseEmailProps> = ({ uid, licenseString 
               </motion.div>
             </Box>
             <CustomTextInput label="UID" name="uid" />
-            <CustomTextInput
-              label="From"
-              name="from"
-              disabled={true}
-            />
-            <CustomTextInput label="To" name="to" />
-            <CustomTextInput label="Subject" name="subject" />
+            <CustomTextInput label="Line User Id" name="lineUserId" />
             <CustomTextInput
               label="License String"
               name="licenseString"
             />
             <motion.div
               whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.1 }}>
-              {/* <Button type="submit" fullWidth variant="contained" sx={{ borderRadius: 5 }}>
-                Send Email
-              </Button> */}
               <SubmitButton loading={loading} buttonText="Send Email" />
             </motion.div>
           </Box>
@@ -127,4 +114,4 @@ const SendLicenseEmail: React.FC<SendLicenseEmailProps> = ({ uid, licenseString 
   )
 }
 
-export default SendLicenseEmail
+export default SendLicenseMessage

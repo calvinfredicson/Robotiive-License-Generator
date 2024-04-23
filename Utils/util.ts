@@ -34,34 +34,17 @@ export async function customFetch<T>(
   return responseBody
 }
 
-function removeAfterCharacter(inputString: string, character: string) {
-  const index = inputString.indexOf(character)
-  if (index !== -1) {
-    return inputString.substring(0, index)
-  }
-  return inputString
-}
-
-export function generateEmailContent(
-  to: string,
+export function generateLicenseMessageContent(
   uid: string,
   licenseString: string
 ) {
-  const template: string = `
-Hi ${removeAfterCharacter(to, "@")},
-  
-Here is your license information:
+  const template: string = `Here is your license information:
   
 UID: 
 ${uid}
   
 RPA License: 
 ${licenseString}
-
-Thank you for choosing Robotiive. 
-
-Sincerely,
-Robotiive Bot
 `
 
   return template

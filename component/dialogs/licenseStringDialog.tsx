@@ -16,7 +16,7 @@ import { Transition } from "pages/auth"
 interface LicenseDialogProps
   extends Omit<ReturnType<typeof useModal>, "handleOpen"> {
   displayContent: string
-  handleSendEmail: () => void
+  handleSendLicense: () => void
 }
 
 enum CopyButtonText {
@@ -28,7 +28,7 @@ const LicenseStringDialog: React.FC<LicenseDialogProps> = ({
   displayContent,
   open,
   handleClose,
-  handleSendEmail
+  handleSendLicense
 }) => {
   const handleCopy = useCallback(async () => {
     await navigator.clipboard.writeText(displayContent)
@@ -71,7 +71,7 @@ const LicenseStringDialog: React.FC<LicenseDialogProps> = ({
         <Button autoFocus onClick={handleCopy} sx={{ borderRadius: 5 }}>
           {copyButtonText}
         </Button>
-        <Button variant="contained" onClick={handleSendEmail} sx={{ borderRadius: 5 }}>Send Email</Button>
+        <Button variant="contained" onClick={handleSendLicense} sx={{ borderRadius: 5 }}>Send License</Button>
       </DialogActions>
     </Dialog>
   )

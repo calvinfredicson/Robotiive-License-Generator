@@ -19,5 +19,5 @@ export const enum ProductType {
 
 export const enum Features {
   GENERATE_LICENSE = "GENERATE_LICENSE",
-  SEND_EMAIL = "SEND_EMAIL"
+  SEND_LICENSE = "SEND_LICENSE"
 }

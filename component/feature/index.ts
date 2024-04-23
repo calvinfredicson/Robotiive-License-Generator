@@ -1,5 +1,5 @@
 import LicenseGenerator from "./licenseGenerator"
 import FeatureSelector from "./featureSelector"
-import SendLicenseEmail from "./sendLicenseEmail"
+import SendLicenseMessage from "./sendLicense"
 
-export { LicenseGenerator, FeatureSelector, SendLicenseEmail }
+export { LicenseGenerator, FeatureSelector, SendLicenseMessage }

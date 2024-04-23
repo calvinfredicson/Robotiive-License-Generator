@@ -17,6 +17,7 @@ import {
   SubmitButton
 } from "component"
 import useMutation from "customHook/useMutation"
+import { FeatureList } from "stringTemplates"
 
 const LicenseGenerator: React.FC = () => {
   const theme = useTheme()
@@ -53,18 +54,18 @@ const LicenseGenerator: React.FC = () => {
   }, [error])
 
   const router = useRouter()
-  const navigateToSendEmailPage = useCallback(() => {
-    // get current uid and send it to the send email page
+  const navigateToSendLicensePage = useCallback(() => {
+    // get current uid and send it to the send license page
     const uid = methods.watch("uid")
     if (!licenseString.length || !uid.length) return
     router.push({
-      pathname: "/sendEmail",
+      pathname: FeatureList.SEND_LICENSE.route,
       query: { licenseString, uid }
     })
   }, [methods.watch, licenseString, router])
 
-  const handleSendEmail = useCallback(() => {
-    navigateToSendEmailPage()
+  const handleSendLicense = useCallback(() => {
+    navigateToSendLicensePage()
   }, [licenseString])
 
   const handleReset = useCallback(() => {
@@ -141,10 +142,10 @@ const LicenseGenerator: React.FC = () => {
                   variant="contained"
                   color="success"
                   size="large"
-                  onClick={handleSendEmail}
+                  onClick={handleSendLicense}
                   sx={{ borderRadius: "15px" }}
                 >
-                  Send Email
+                  Send License
                 </Button>
               </motion.div>
               <motion.div
@@ -164,7 +165,7 @@ const LicenseGenerator: React.FC = () => {
               </motion.div>
             </Box>
             <LicenseStringDialog
-              handleSendEmail={handleSendEmail}
+              handleSendLicense={handleSendLicense}
               handleClose={handleDialogClose}
               displayContent={licenseString}
               {...modal}

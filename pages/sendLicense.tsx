@@ -1,7 +1,7 @@
-import { SendLicenseEmail } from "component"
+import { SendLicenseMessage } from "component"
 import { useRouter } from "next/router"
 
-const sendEmail = () => {
+const sendMessage: React.FC = () => {
   const { push, query } = useRouter()
   if (!query) {
     push("/generateLicense")
@@ -9,7 +9,7 @@ const sendEmail = () => {
 
   const uid = query["uid"] as string
   const licenseString = query["licenseString"] as string
-  return <SendLicenseEmail licenseString={licenseString} uid={uid} />
+  return <SendLicenseMessage licenseString={licenseString} uid={uid} />
 }
 
-export default sendEmail
+export default sendMessage
